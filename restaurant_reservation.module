@@ -1,5 +1,7 @@
 <?php
 /**
  * @file
- * Drupal needs this blank file.
+ * Code for the Restaurant Reservation feature.
  */
+
+include_once 'restaurant_reservation.features.inc';
