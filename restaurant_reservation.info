@@ -1,0 +1,7 @@
+name = Restaurant Reservation
+description = Reservation system for the Restaurant Distribution.
+core = 7.x
+package = Restaurant
+version = 7.x-1.0
+project = restaurant_reservation
+features[features_api][] = api:2
