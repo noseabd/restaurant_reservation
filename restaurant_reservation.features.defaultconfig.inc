@@ -169,7 +169,7 @@ function restaurant_reservation_defaultconfig_field_default_fields() {
           'year_range' => '-0:+1',
         ),
         'type' => 'date_select',
-        'weight' => 32,
+        'weight' => 2,
       ),
     ),
   );
@@ -230,7 +230,7 @@ function restaurant_reservation_defaultconfig_field_default_fields() {
           'size' => 60,
         ),
         'type' => 'email_textfield',
-        'weight' => 35,
+        'weight' => 4,
       ),
     ),
   );
@@ -307,7 +307,7 @@ function restaurant_reservation_defaultconfig_field_default_fields() {
           'rows' => 5,
         ),
         'type' => 'text_textarea',
-        'weight' => 37,
+        'weight' => 6,
       ),
     ),
   );
@@ -386,7 +386,7 @@ function restaurant_reservation_defaultconfig_field_default_fields() {
           'size' => 60,
         ),
         'type' => 'text_textfield',
-        'weight' => 34,
+        'weight' => 1,
       ),
     ),
   );
@@ -458,7 +458,7 @@ function restaurant_reservation_defaultconfig_field_default_fields() {
         'module' => 'number',
         'settings' => array(),
         'type' => 'number',
-        'weight' => 33,
+        'weight' => 3,
       ),
     ),
   );
@@ -537,7 +537,7 @@ function restaurant_reservation_defaultconfig_field_default_fields() {
           'size' => 60,
         ),
         'type' => 'text_textfield',
-        'weight' => 36,
+        'weight' => 5,
       ),
     ),
   );
@@ -668,10 +668,10 @@ function restaurant_reservation_defaultconfig_strongarm() {
     'extra_fields' => array(
       'form' => array(
         'title' => array(
-          'weight' => '-5',
+          'weight' => '0',
         ),
         'path' => array(
-          'weight' => '30',
+          'weight' => '7',
         ),
       ),
       'display' => array(),
