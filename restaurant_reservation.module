@@ -26,6 +26,9 @@ function restaurant_reservation_form_reservation_node_form_alter(&$form, &$form_
 
     // Add an after_build callback.
     $form['#after_build'][] = 'restaurant_reservation_form_reservation_node_form_after_build';
+
+    // Add a custom submit callback.
+    $form['actions']['submit']['#submit'][] = 'restaurant_reservation_form_reservation_node_form_submit';
   }
 }
 
@@ -42,4 +45,18 @@ function restaurant_reservation_form_reservation_node_form_after_build($form) {
   $form['actions']['submit']['#value'] = t('Submit Reservation');
 
   return $form;
+}
+
+/**
+ * Custom submit callback for reservation form.
+ */
+function restaurant_reservation_form_reservation_node_form_submit($form, &$form_state) {
+  // Clear all messages.
+  drupal_get_messages();
+
+  // Show a custom message.
+  drupal_set_message(t('Thank you for your reservation. We will send you a confirmation email shortly.'));
+
+  // Redirect to the reservation page.
+  $form_state['redirect'] = 'reservation';
 }
