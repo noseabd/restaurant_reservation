@@ -167,7 +167,7 @@ function restaurant_reservation_defaultconfig_field_default_fields() {
           'text_parts' => array(),
           'year_range' => '-0:+1',
         ),
-        'type' => 'date_select',
+        'type' => 'date_popup',
         'weight' => 2,
       ),
     ),

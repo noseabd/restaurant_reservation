@@ -97,7 +97,7 @@ function restaurant_reservation_field_default_field_instances() {
         'text_parts' => array(),
         'year_range' => '-0:+1',
       ),
-      'type' => 'date_select',
+      'type' => 'date_popup',
       'weight' => 2,
     ),
   );
