@@ -14,6 +14,37 @@ function restaurant_reservation_ctools_plugin_directory($module, $plugin) {
 }
 
 /**
+ * Implements hook_init().
+ */
+function restaurant_reservation_init() {
+  // Display a message if there are new resevations.
+  if (user_access('administer reservation')) {
+    $pending_reservations = restaurant_reservation_get_reservations_for_status('pending');
+    if ($count = count($pending_reservations)) {
+      $message = t('There @are <em>@count</em> pending @reservations. !link to administer reservations.', array(
+        '@are' => format_plural($count, t('is'), t('are')),
+        '@reservations' => format_plural($count, t('reservation'), t('reservations')),
+        '@count' => $count,
+        '!link' => l(t('Click here'), 'admin/reservations/pending'),
+      ));
+      drupal_set_message($message, 'warning', FALSE);
+    }
+  }
+}
+
+/**
+ * Implements hook_permission().
+ */
+function restaurant_reservation_permission() {
+  return array(
+    'administer reservation' => array(
+      'title' => t('Administer Reservations'),
+      'description' => t('Access the reservation admininstration pages and manage reservations.'),
+    ),
+  );
+}
+
+/**
  * Implements hook_theme().
  */
 function restaurant_reservation_theme() {
@@ -104,4 +135,32 @@ function _restaurant_reservation_get_status_color($status) {
   );
 
   return isset($colors[$status]) ? $colors[$status] : 'info';
+}
+
+/**
+ * Finds all reservations for a given status.
+ *
+ * @param $status
+ *  The status of the reservations to find. pending, confirmed or cancelled.
+ * @param $load
+ *  If TRUE, the full node object is loaded.
+ * @return
+ *  An array of reservations.
+ */
+function restaurant_reservation_get_reservations_for_status($status, $load = FALSE) {
+  $query = db_select('node', 'n');
+  $query->join('field_data_field_reservation_status', 'rs', 'n.nid = rs.entity_id');
+  $query->condition('field_reservation_status_value', $status);
+  $query->fields('rs', array('entity_id'));
+
+  $results = $query->execute()
+    ->fetchAllAssoc('entity_id');
+
+  if (count($results) && $load) {
+    foreach ($results as $entity_id => $result) {
+      $results[$entity_id] = node_load($entity_id);
+    }
+  }
+
+  return $results;
 }
