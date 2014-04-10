@@ -102,3 +102,6 @@ features[variable][] = pathauto_node_reservation_pattern
 features[variable][] = save_continue_reservation
 features[views_view][] = administration_reservations
 features_exclude[dependencies][ctools] = ctools
+
+; Views Handlers
+files[] = views/restaurant_reservation_handler_update_status_form.inc

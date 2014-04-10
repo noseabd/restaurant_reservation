@@ -106,7 +106,22 @@ function restaurant_reservation_preprocess_views_view_table(&$variables) {
 }
 
 /**
+ * Available statuses.
+ *
+ * @param $status
+ *  The status of the reservations to find. pending, confirmed or cancelled.
+ */
+function restaurant_reservation_get_statuses() {
+  // Get values from field.
+  $info = field_info_field('field_reservation_status');
+  return isset($info['settings']['allowed_values']) ? $info['settings']['allowed_values'] : array();
+}
+
+/**
  * Colors for statuses.
+ *
+ * @param $status
+ *  The status of the reservations to find. pending, confirmed or cancelled.
  */
 function _restaurant_reservation_get_status_color($status) {
   $colors = array(
