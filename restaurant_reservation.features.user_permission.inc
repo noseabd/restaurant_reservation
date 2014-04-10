@@ -17,6 +17,13 @@ function restaurant_reservation_user_default_permissions() {
     'module' => 'panelizer',
   );
 
+  // Exported permission: 'administer reservation'.
+  $permissions['administer reservation'] = array(
+    'name' => 'administer reservation',
+    'roles' => array(),
+    'module' => 'restaurant_reservation',
+  );
+
   // Exported permission: 'create reservation content'.
   $permissions['create reservation content'] = array(
     'name' => 'create reservation content',
