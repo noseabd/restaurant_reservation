@@ -634,6 +634,24 @@ admin/reservations/%reservation_id:field_reservation_status',
     $pane->locks = array();
     $display->content['new-15'] = $pane;
     $display->panels['column2'][0] = 'new-15';
+    $pane = new stdClass();
+    $pane->pid = 'new-16';
+    $pane->panel = 'column2';
+    $pane->type = 'reservation_update_status_form';
+    $pane->subtype = 'reservation_update_status_form';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array();
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 1;
+    $pane->locks = array();
+    $display->content['new-16'] = $pane;
+    $display->panels['column2'][1] = 'new-16';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = 'new-12';
   $handler->conf['display'] = $display;

@@ -36,17 +36,34 @@ function restaurant_reservation_views_default_views() {
   $handler->display->display_options['pager']['options']['items_per_page'] = '25';
   $handler->display->display_options['style_plugin'] = 'table';
   $handler->display->display_options['style_options']['columns'] = array(
+    'views_bulk_operations' => 'views_bulk_operations',
+    'nid' => 'nid',
     'field_reservation_name' => 'field_reservation_name',
     'field_reservation_date' => 'field_reservation_date',
     'field_reservation_persons' => 'field_reservation_persons',
     'field_reservation_email' => 'field_reservation_email',
     'field_reservation_phone' => 'field_reservation_phone',
     'created' => 'created',
+    'field_reservation_status' => 'field_reservation_status',
+    'nothing' => 'nothing',
     'edit_node' => 'edit_node',
     'delete_node' => 'delete_node',
+    'field_reservation_status_editable' => 'field_reservation_status_editable',
   );
-  $handler->display->display_options['style_options']['default'] = 'created';
+  $handler->display->display_options['style_options']['default'] = 'field_reservation_date';
   $handler->display->display_options['style_options']['info'] = array(
+    'views_bulk_operations' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'nid' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
     'field_reservation_name' => array(
       'sortable' => 1,
       'default_sort_order' => 'asc',
@@ -89,12 +106,31 @@ function restaurant_reservation_views_default_views() {
       'separator' => '',
       'empty_column' => 0,
     ),
+    'field_reservation_status' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'nothing' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
     'edit_node' => array(
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
     ),
     'delete_node' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_reservation_status_editable' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
       'align' => '',
       'separator' => '',
       'empty_column' => 0,
@@ -308,11 +344,17 @@ function restaurant_reservation_views_default_views() {
   $handler->display->display_options['fields']['delete_node']['table'] = 'views_entity_node';
   $handler->display->display_options['fields']['delete_node']['field'] = 'delete_node';
   $handler->display->display_options['fields']['delete_node']['label'] = 'Delete';
-  /* Sort criterion: Content: Post date */
-  $handler->display->display_options['sorts']['created']['id'] = 'created';
-  $handler->display->display_options['sorts']['created']['table'] = 'node';
-  $handler->display->display_options['sorts']['created']['field'] = 'created';
-  $handler->display->display_options['sorts']['created']['order'] = 'DESC';
+  /* Field: Content: Update status form */
+  $handler->display->display_options['fields']['update_status_form']['id'] = 'update_status_form';
+  $handler->display->display_options['fields']['update_status_form']['table'] = 'node';
+  $handler->display->display_options['fields']['update_status_form']['field'] = 'update_status_form';
+  $handler->display->display_options['fields']['update_status_form']['label'] = 'Update status';
+  $handler->display->display_options['fields']['update_status_form']['option_a'] = 'foo';
+  $handler->display->display_options['fields']['update_status_form']['option_b'] = 'bar';
+  /* Sort criterion: Content: Date (field_reservation_date) */
+  $handler->display->display_options['sorts']['field_reservation_date_value']['id'] = 'field_reservation_date_value';
+  $handler->display->display_options['sorts']['field_reservation_date_value']['table'] = 'field_data_field_reservation_date';
+  $handler->display->display_options['sorts']['field_reservation_date_value']['field'] = 'field_reservation_date_value';
   /* Filter criterion: Content: Published */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
