@@ -14,11 +14,23 @@ function restaurant_reservation_ctools_plugin_directory($module, $plugin) {
 }
 
 /**
+ * Implements hook_theme().
+ */
+function restaurant_reservation_theme() {
+  return array(
+    'restaurant_reservation_status' => array(
+      'variables' => array('status' => NULL),
+      'file' => 'restaurant_reservation.theme.inc',
+    ),
+  );
+}
+
+/**
  * Implements hook_form_FORM_ID_alter().
  */
 function restaurant_reservation_form_reservation_node_form_alter(&$form, &$form_state) {
   // When the form is not shown on admin pages, make some changes.
-  if (!drupal_match_path(current_path(), "node/*/reservation")) {
+  if (!drupal_match_path(current_path(), "node/*/reservation\nnode/*/edit")) {
     // Remove additional fields.
     $form['additional_settings']['#access'] = FALSE;
     $form['revision_information']['#access'] = FALSE;
@@ -29,6 +41,9 @@ function restaurant_reservation_form_reservation_node_form_alter(&$form, &$form_
 
     // Add a custom submit callback.
     $form['actions']['submit']['#submit'][] = 'restaurant_reservation_form_reservation_node_form_submit';
+
+    // Hide the status field.
+    $form['field_reservation_status']['#access'] = FALSE;
   }
 }
 
@@ -59,4 +74,34 @@ function restaurant_reservation_form_reservation_node_form_submit($form, &$form_
 
   // Redirect to the reservation page.
   $form_state['redirect'] = 'reservation';
+}
+
+/**
+ * Implements hook_preprocess().
+ */
+function restaurant_reservation_preprocess_views_view_table(&$variables) {
+  $view = $variables['view'];
+  if ($view->name == 'administration_reservations') {
+    $rows = &$variables['rows'];
+    foreach ($rows as &$row) {
+      $status = $row['field_reservation_status'];
+      $row['field_reservation_status'] = theme('restaurant_reservation_status', array('status' => $status));
+    }
+  }
+
+  // Add css.
+  drupal_add_css(drupal_get_path('module', 'restaurant_reservation') . '/css/restaurant_reservation.css');
+}
+
+/**
+ * Colors for statuses.
+ */
+function _restaurant_reservation_get_status_color($status) {
+  $colors = array(
+    'Pending' => 'info',
+    'Confirmed' => 'success',
+    'Cancelled' => 'danger',
+  );
+
+  return isset($colors[$status]) ? $colors[$status] : 'info';
 }
