@@ -52,7 +52,7 @@ function restaurant_reservation_menu() {
  */
 function restaurant_reservation_menu_local_tasks_alter(&$data, $router_item, $root_path) {
   // Add action link to 'admin/reservations/add' on 'admin/reservations' page.
-  if ($root_path == 'admin/reservations') {
+  if (drupal_match_path($root_path, "admin/reservations\nadmin/reservations/*")) {
     $item = menu_get_item('admin/reservations/add');
     if ($item['access']) {
       $data['actions']['output'][] = array(
