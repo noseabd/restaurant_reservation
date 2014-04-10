@@ -66,6 +66,7 @@ function restaurant_reservation_preprocess_views_view_table(&$variables) {
     $rows = &$variables['rows'];
     foreach ($rows as &$row) {
       $status = $row['field_reservation_status'];
+      // Theme status with colored labels.
       $row['field_reservation_status'] = theme('restaurant_reservation_status', array('status' => $status));
     }
   }
