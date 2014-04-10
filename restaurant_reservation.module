@@ -21,7 +21,7 @@ function restaurant_reservation_init() {
   if (user_access('administer reservation')) {
     $pending_reservations = restaurant_reservation_get_reservations_for_status('pending');
     if ($count = count($pending_reservations)) {
-      $message = t('There @are <em>@count</em> pending @reservations. !link to administer reservations.', array(
+      $message = t('There @are <strong>@count</strong> pending @reservations. !link to administer reservations.', array(
         '@are' => format_plural($count, t('is'), t('are')),
         '@reservations' => format_plural($count, t('reservation'), t('reservations')),
         '@count' => $count,
