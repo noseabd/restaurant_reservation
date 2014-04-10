@@ -164,3 +164,25 @@ function restaurant_reservation_get_reservations_for_status($status, $load = FAL
 
   return $results;
 }
+
+/**
+ * Changes the status for a reservation.
+ *
+ * @param $reservation_id
+ *  The id of the reservation.
+ * @param $status
+ *  The new status of the reservations.
+ * @return
+ *  TRUE if status has been successfully changed.
+ */
+function restaurant_reservation_update_status_for_reservation($reservation_id, $status) {
+  $node = node_load($reservation_id);
+
+  // Update the status for the node.
+  $node->field_reservation_status[LANGUAGE_NONE][0]['value'] = $status;
+
+  // Save the node.
+  node_save($node);
+
+  return ($node->field_reservation_status[LANGUAGE_NONE][0]['value'] == $status);
+}
