@@ -68,11 +68,13 @@
 .label-danger[href]:hover, .label-danger[href]:focus {
   background-color: #c9302c;
 }
-
 .views-field-update-status-form {
   width: 200px;
 }
 .views-field-update-status-form .form-item-status,
 .views-field-update-status-form .form-submit {
   display: inline-block;
+}
+.views-widget-filter-field_reservation_status_value {
+  margin-top: -5px;
 }
