@@ -16,7 +16,10 @@ function restaurant_reservation_default_page_manager_pages() {
   $page->admin_title = 'Reservation';
   $page->admin_description = '';
   $page->path = 'reservation';
-  $page->access = array();
+  $page->access = array(
+    'type' => 'none',
+    'settings' => NULL,
+  );
   $page->menu = array();
   $page->arguments = array();
   $page->conf = array(
@@ -347,6 +350,8 @@ function restaurant_reservation_default_page_manager_pages() {
       ),
     ),
     'logic' => 'and',
+    'type' => 'none',
+    'settings' => NULL,
   );
   $page->menu = array();
   $page->arguments = array(

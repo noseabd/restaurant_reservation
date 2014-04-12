@@ -37,11 +37,23 @@ function restaurant_reservation_init() {
  * Implements hook_menu().
  */
 function restaurant_reservation_menu() {
+
   $items['admin/reservations/add'] = array(
     'title' => 'Add Reservation',
+    'weight' => 10,
     'page callback' => 'restaurant_reservation_add_reservation_admin',
     'access arguments' => array('administer reservations'),
     'file' => 'restaurant_reservation.admin.inc',
+    'type' => MENU_LOCAL_TASK,
+  );
+
+  $items['admin/reservations/manage'] = array(
+    'title' => 'Manage reservations',
+    'weight' => 20,
+    'page callback' => 'restaurant_reservation_manage_reservations_admin',
+    'access arguments' => array('administer reservations'),
+    'file' => 'restaurant_reservation.admin.inc',
+    'type' => MENU_LOCAL_TASK,
   );
 
   return $items;

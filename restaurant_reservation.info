@@ -55,7 +55,6 @@ features[field_base][] = field_reservation_name
 features[field_base][] = field_reservation_persons
 features[field_base][] = field_reservation_phone
 features[field_base][] = field_reservation_status
-features[field_instance][] = comment-comment_node_reservation-comment_body
 features[field_instance][] = node-reservation-field_reservation_date
 features[field_instance][] = node-reservation-field_reservation_email
 features[field_instance][] = node-reservation-field_reservation_message

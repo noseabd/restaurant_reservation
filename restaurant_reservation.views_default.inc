@@ -588,7 +588,7 @@ function restaurant_reservation_views_default_views() {
   $handler->display->display_options['filters']['field_reservation_status_value']['expose']['label'] = 'Status (field_reservation_status)';
   $handler->display->display_options['filters']['field_reservation_status_value']['expose']['operator'] = 'field_reservation_status_value_op';
   $handler->display->display_options['filters']['field_reservation_status_value']['expose']['identifier'] = 'field_reservation_status_value';
-  $handler->display->display_options['path'] = 'admin/reservations/pending';
+  $handler->display->display_options['path'] = 'admin/reservations/manage/pending';
   $handler->display->display_options['menu']['type'] = 'tab';
   $handler->display->display_options['menu']['title'] = 'Pending';
   $handler->display->display_options['menu']['weight'] = '0';
@@ -670,7 +670,7 @@ function restaurant_reservation_views_default_views() {
   $handler->display->display_options['filters']['field_reservation_status_value']['value'] = array(
     'confirmed' => 'confirmed',
   );
-  $handler->display->display_options['path'] = 'admin/reservations/confirmed';
+  $handler->display->display_options['path'] = 'admin/reservations/manage/confirmed';
   $handler->display->display_options['menu']['type'] = 'tab';
   $handler->display->display_options['menu']['title'] = 'Confirmed';
   $handler->display->display_options['menu']['weight'] = '10';
@@ -752,7 +752,7 @@ function restaurant_reservation_views_default_views() {
   $handler->display->display_options['filters']['field_reservation_status_value']['value'] = array(
     'cancelled' => 'cancelled',
   );
-  $handler->display->display_options['path'] = 'admin/reservations/cancelled';
+  $handler->display->display_options['path'] = 'admin/reservations/manage/cancelled';
   $handler->display->display_options['menu']['type'] = 'tab';
   $handler->display->display_options['menu']['title'] = 'Cancelled';
   $handler->display->display_options['menu']['weight'] = '30';
