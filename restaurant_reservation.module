@@ -107,6 +107,78 @@ function restaurant_reservation_theme() {
 }
 
 /**
+ * Implements hook_view_mode_templates().
+ */
+function restaurant_reservation_view_mode_templates() {
+  return array(
+    'node__reservation',
+  );
+}
+
+/**
+ * Implements hook_node_update().
+ */
+function restaurant_reservation_node_update($node) {
+  if ($node->type == 'reservation') {
+    $current_status = entity_metadata_wrapper('node', $node)->field_reservation_status->value();
+    $old_status = entity_metadata_wrapper('node', $node->original)->field_reservation_status->value();
+
+    // If status has been updated, send an mail.
+    if ($current_status != $old_status) {
+      restaurant_reservation_send_update_status_mail($node);
+    }
+  }
+}
+
+/**
+ * Implements hook_node_insert().
+ */
+function restaurant_reservation_node_insert($node) {
+  if ($node->type == 'reservation') {
+    $current_status = entity_metadata_wrapper('node', $node)->field_reservation_status->value();
+    restaurant_reservation_send_update_status_mail($node);
+  }
+}
+
+/**
+ * Sends an email for a reservation status change.
+ */
+function restaurant_reservation_send_update_status_mail($reservation) {
+  $current_status = entity_metadata_wrapper('node', $reservation)->field_reservation_status->value();
+  $mail = _restaurant_reservation_get_mail_for_status($current_status);
+
+  $params['subject'] = $mail['subject'];
+  $params['body'] = $mail['body'];
+
+  // Append the reservation number to the subject.
+  // TODO: Tokenize this.
+  $reservation_number = entity_metadata_wrapper('node', $reservation)->field_reservation_number->value();
+  $params['subject'] = '[Reservation ' . $reservation_number . '] ' . $params['subject'];
+
+  // For now, let's just attach the node display to the body.
+  // TODO: Tokenize this. Add HTML support.
+  $params['body'] .= drupal_render(node_view($reservation));
+
+  $to = entity_metadata_wrapper('node', $reservation)->field_reservation_email->value();
+  $lang = language_default();
+
+  return drupal_mail('restaurant_mail', 'restaurant_mail', $to, $lang, $params);
+}
+
+function _restaurant_reservation_get_mail_for_status($status = '') {
+  $mail = array();
+
+  // Get mail for each status.
+  $statuses = restaurant_reservation_get_statuses();
+  foreach ($statuses as $name => $title) {
+    $mail[$name]['subject'] = panopoly_config_get('reservation_mail_' . $name . '_subject');
+    $mail[$name]['body'] = panopoly_config_get('reservation_mail_' . $name . '_body');
+  }
+
+  return isset($mail[$status]) ? $mail[$status] : $mail;
+}
+
+/**
  * Implements hook_panopoly_config_info().
  */
 function restaurant_reservation_panopoly_config_info() {
@@ -126,6 +198,15 @@ function restaurant_reservation_panopoly_config_info() {
     'require' => TRUE,
     'default' => 'RN',
   );
+
+  $statuses = restaurant_reservation_get_statuses();
+  foreach ($statuses as $name => $status) {
+    $config['reservation_mail_' . $name . '_[mail_part]'] = array(
+      'title' => t('Email for @name reservations', array('@name' => $name)),
+      'description' => t('Message for reservation @name email. The reservation number and the reservation details will be added to the message.', array('@name' => $name)),
+      'type' => 'mail_text',
+    );
+  }
 
   $info = array(
     'reservation' => array(

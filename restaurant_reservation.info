@@ -17,6 +17,7 @@ dependencies[] = options
 dependencies[] = page_manager
 dependencies[] = panelizer
 dependencies[] = panopoly_config
+dependencies[] = restaurant_mail
 dependencies[] = strongarm
 dependencies[] = text
 dependencies[] = views
