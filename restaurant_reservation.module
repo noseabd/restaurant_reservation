@@ -26,7 +26,7 @@ function restaurant_reservation_init() {
         '@are' => format_plural($count, t('is'), t('are')),
         '@reservations' => format_plural($count, t('reservation'), t('reservations')),
         '@count' => $count,
-        '!link' => l(t('Click here'), 'admin/reservations/pending'),
+        '!link' => l(t('Click here'), 'admin/reservations/manage/pending'),
       ));
       drupal_set_message($message, 'warning', FALSE);
     }
