@@ -34,7 +34,7 @@ function restaurant_reservation_init() {
 
   // Redirect to reservation admin page when viewing the node.
   if ($node = menu_get_object()) {
-    if ($node->type == 'reservation') {
+    if ($node->type == 'reservation' && arg(2) == '') {
       drupal_goto('admin/reservations/view/' . $node->nid);
     }
   }
@@ -146,6 +146,28 @@ function restaurant_reservation_preprocess_views_view_table(&$variables) {
 }
 
 /**
+ * Computed field compute callback.
+ */
+function computed_field_field_reservation_number_compute(&$entity_field, $entity_type, $entity, $field, $instance, $langcode, $items) {
+  $reservation_nid = $entity->nid;
+  $reservation_number = _restaurant_reservation_get_unique_id($reservation_nid);
+
+  // Make sure reservation number is unique.
+  while (_restaurant_reservation_number_exists($reservation_number)) {
+    $reservation_number = _restaurant_reservation_get_unique_id($reservation_nid);
+  }
+
+  $entity_field[0]['value'] = $reservation_number;
+}
+
+/**
+ * Computed field compute callback.
+ */
+function computed_field_field_reservation_number_display($field, $entity_field_item, $entity_lang, $langcode, $entity) {
+  return $entity_field_item['value'];
+}
+
+/**
  * Available statuses.
  *
  * @param $status
@@ -221,4 +243,38 @@ function restaurant_reservation_update_status_for_reservation($reservation_id, $
   node_save($node);
 
   return ($node->field_reservation_status[LANGUAGE_NONE][0]['value'] == $status);
+}
+
+/**
+ * Generates a random unique id for a reservation number.
+ *
+ * @param $nid
+ *  The node id of the reservation node.
+ *
+ * @return
+ *  A unique id.
+ */
+function _restaurant_reservation_get_unique_id($nid) {
+  $salt = drupal_get_hash_salt();
+  $hash = md5($salt . $nid . time());
+  return 'RN-' . substr($hash, rand(0, strlen($hash) - 5), 5);
+}
+
+/**
+ * Checks if a reservation number exists.
+ *
+ * @param $reservation_number
+ *  The reservation number.
+ *
+ * @return BOOLEAN
+ *  TRUE if the number exists.
+ */
+function _restaurant_reservation_number_exists($reservation_number) {
+  $reservation_number = db_select('field_data_field_reservation_number', 'rn')
+    ->fields('rn', array('field_reservation_number_value'))
+    ->condition('field_reservation_number_value', $reservation_number)
+    ->execute()
+    ->fetchField();
+
+  return (!empty($reservation_number)) ? TRUE : FALSE;
 }
