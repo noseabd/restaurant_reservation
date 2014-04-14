@@ -98,7 +98,7 @@ function restaurant_reservation_default_page_manager_pages() {
     $pane->pid = 'new-2';
     $pane->panel = 'sidebar';
     $pane->type = 'fieldable_panels_pane';
-    $pane->subtype = 'fpid:26';
+    $pane->subtype = 'fpid:3';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
@@ -261,6 +261,34 @@ admin/reservations/%reservation_id:field_reservation_status',
     $pane->pid = 'new-5';
     $pane->panel = 'column1';
     $pane->type = 'entity_field';
+    $pane->subtype = 'node:field_reservation_number';
+    $pane->shown = TRUE;
+    $pane->access = array();
+    $pane->configuration = array(
+      'label' => 'title',
+      'formatter' => 'computed_field_plain',
+      'delta_limit' => 0,
+      'delta_offset' => '0',
+      'delta_reversed' => FALSE,
+      'formatter_settings' => array(),
+      'context' => array(),
+      'override_title' => 0,
+      'override_title_text' => '',
+    );
+    $pane->cache = array();
+    $pane->style = array(
+      'settings' => NULL,
+    );
+    $pane->css = array();
+    $pane->extras = array();
+    $pane->position = 0;
+    $pane->locks = array();
+    $display->content['new-5'] = $pane;
+    $display->panels['column1'][0] = 'new-5';
+    $pane = new stdClass();
+    $pane->pid = 'new-6';
+    $pane->panel = 'column1';
+    $pane->type = 'entity_field';
     $pane->subtype = 'node:field_reservation_name';
     $pane->shown = TRUE;
     $pane->access = array();
@@ -293,12 +321,12 @@ admin/reservations/%reservation_id:field_reservation_status',
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 0;
+    $pane->position = 1;
     $pane->locks = array();
-    $display->content['new-5'] = $pane;
-    $display->panels['column1'][0] = 'new-5';
+    $display->content['new-6'] = $pane;
+    $display->panels['column1'][1] = 'new-6';
     $pane = new stdClass();
-    $pane->pid = 'new-6';
+    $pane->pid = 'new-7';
     $pane->panel = 'column1';
     $pane->type = 'entity_field';
     $pane->subtype = 'node:field_reservation_email';
@@ -321,12 +349,12 @@ admin/reservations/%reservation_id:field_reservation_status',
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 1;
+    $pane->position = 2;
     $pane->locks = array();
-    $display->content['new-6'] = $pane;
-    $display->panels['column1'][1] = 'new-6';
+    $display->content['new-7'] = $pane;
+    $display->panels['column1'][2] = 'new-7';
     $pane = new stdClass();
-    $pane->pid = 'new-7';
+    $pane->pid = 'new-8';
     $pane->panel = 'column1';
     $pane->type = 'entity_field';
     $pane->subtype = 'node:field_reservation_phone';
@@ -349,12 +377,12 @@ admin/reservations/%reservation_id:field_reservation_status',
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 2;
+    $pane->position = 3;
     $pane->locks = array();
-    $display->content['new-7'] = $pane;
-    $display->panels['column1'][2] = 'new-7';
+    $display->content['new-8'] = $pane;
+    $display->panels['column1'][3] = 'new-8';
     $pane = new stdClass();
-    $pane->pid = 'new-8';
+    $pane->pid = 'new-9';
     $pane->panel = 'column1';
     $pane->type = 'entity_field';
     $pane->subtype = 'node:field_reservation_persons';
@@ -380,12 +408,12 @@ admin/reservations/%reservation_id:field_reservation_status',
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 3;
+    $pane->position = 4;
     $pane->locks = array();
-    $display->content['new-8'] = $pane;
-    $display->panels['column1'][3] = 'new-8';
+    $display->content['new-9'] = $pane;
+    $display->panels['column1'][4] = 'new-9';
     $pane = new stdClass();
-    $pane->pid = 'new-9';
+    $pane->pid = 'new-10';
     $pane->panel = 'column1';
     $pane->type = 'entity_field';
     $pane->subtype = 'node:field_reservation_date';
@@ -414,12 +442,12 @@ admin/reservations/%reservation_id:field_reservation_status',
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 4;
+    $pane->position = 5;
     $pane->locks = array();
-    $display->content['new-9'] = $pane;
-    $display->panels['column1'][4] = 'new-9';
+    $display->content['new-10'] = $pane;
+    $display->panels['column1'][5] = 'new-10';
     $pane = new stdClass();
-    $pane->pid = 'new-10';
+    $pane->pid = 'new-11';
     $pane->panel = 'column1';
     $pane->type = 'entity_field';
     $pane->subtype = 'node:field_reservation_message';
@@ -442,12 +470,12 @@ admin/reservations/%reservation_id:field_reservation_status',
     );
     $pane->css = array();
     $pane->extras = array();
-    $pane->position = 5;
+    $pane->position = 6;
     $pane->locks = array();
-    $display->content['new-10'] = $pane;
-    $display->panels['column1'][5] = 'new-10';
+    $display->content['new-11'] = $pane;
+    $display->panels['column1'][6] = 'new-11';
     $pane = new stdClass();
-    $pane->pid = 'new-11';
+    $pane->pid = 'new-12';
     $pane->panel = 'column2';
     $pane->type = 'entity_field';
     $pane->subtype = 'node:field_reservation_status';
@@ -472,10 +500,10 @@ admin/reservations/%reservation_id:field_reservation_status',
     $pane->extras = array();
     $pane->position = 0;
     $pane->locks = array();
-    $display->content['new-11'] = $pane;
-    $display->panels['column2'][0] = 'new-11';
+    $display->content['new-12'] = $pane;
+    $display->panels['column2'][0] = 'new-12';
     $pane = new stdClass();
-    $pane->pid = 'new-12';
+    $pane->pid = 'new-13';
     $pane->panel = 'column2';
     $pane->type = 'reservation_update_status_form';
     $pane->subtype = 'reservation_update_status_form';
@@ -490,10 +518,10 @@ admin/reservations/%reservation_id:field_reservation_status',
     $pane->extras = array();
     $pane->position = 1;
     $pane->locks = array();
-    $display->content['new-12'] = $pane;
-    $display->panels['column2'][1] = 'new-12';
+    $display->content['new-13'] = $pane;
+    $display->panels['column2'][1] = 'new-13';
   $display->hide_title = PANELS_TITLE_FIXED;
-  $display->title_pane = 'new-8';
+  $display->title_pane = 'new-9';
   $handler->conf['display'] = $display;
   $page->default_handlers[$handler->name] = $handler;
   $pages['view_reservation'] = $page;

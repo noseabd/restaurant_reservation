@@ -151,7 +151,8 @@ function restaurant_reservation_views_default_views() {
   $handler->display->display_options['fields']['views_bulk_operations']['id'] = 'views_bulk_operations';
   $handler->display->display_options['fields']['views_bulk_operations']['table'] = 'node';
   $handler->display->display_options['fields']['views_bulk_operations']['field'] = 'views_bulk_operations';
-  $handler->display->display_options['fields']['views_bulk_operations']['label'] = '#';
+  $handler->display->display_options['fields']['views_bulk_operations']['label'] = '';
+  $handler->display->display_options['fields']['views_bulk_operations']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['views_bulk_operations']['vbo_settings']['display_type'] = '1';
   $handler->display->display_options['fields']['views_bulk_operations']['vbo_settings']['enable_select_all_pages'] = 1;
   $handler->display->display_options['fields']['views_bulk_operations']['vbo_settings']['force_single'] = 0;
@@ -165,11 +166,11 @@ function restaurant_reservation_views_default_views() {
       'label' => '',
     ),
     'action::views_bulk_operations_delete_item' => array(
-      'selected' => 0,
+      'selected' => 1,
       'postpone_processing' => 0,
       'skip_confirmation' => 0,
-      'override_label' => 0,
-      'label' => '',
+      'override_label' => 1,
+      'label' => 'Delete',
     ),
     'action::views_bulk_operations_script_action' => array(
       'selected' => 0,
@@ -278,6 +279,11 @@ function restaurant_reservation_views_default_views() {
       'label' => '',
     ),
   );
+  /* Field: Content: Reservation number */
+  $handler->display->display_options['fields']['field_reservation_number']['id'] = 'field_reservation_number';
+  $handler->display->display_options['fields']['field_reservation_number']['table'] = 'field_data_field_reservation_number';
+  $handler->display->display_options['fields']['field_reservation_number']['field'] = 'field_reservation_number';
+  $handler->display->display_options['fields']['field_reservation_number']['label'] = '#';
   /* Field: Content: Nid */
   $handler->display->display_options['fields']['nid']['id'] = 'nid';
   $handler->display->display_options['fields']['nid']['table'] = 'node';

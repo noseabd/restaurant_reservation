@@ -59,7 +59,7 @@ function restaurant_reservation_defaultconfig_field_default_fields() {
       'description' => '',
       'display' => array(
         'default' => array(
-          'label' => 'above',
+          'label' => 'inline',
           'module' => 'date',
           'settings' => array(
             'format_type' => 'long',
@@ -107,7 +107,7 @@ function restaurant_reservation_defaultconfig_field_default_fields() {
           'year_range' => '-0:+1',
         ),
         'type' => 'date_popup',
-        'weight' => 2,
+        'weight' => 3,
       ),
     ),
   );
@@ -135,11 +135,11 @@ function restaurant_reservation_defaultconfig_field_default_fields() {
       'description' => '',
       'display' => array(
         'default' => array(
-          'label' => 'above',
+          'label' => 'inline',
           'module' => 'email',
           'settings' => array(),
           'type' => 'email_default',
-          'weight' => 4,
+          'weight' => 3,
         ),
         'featured' => array(
           'label' => 'above',
@@ -168,7 +168,7 @@ function restaurant_reservation_defaultconfig_field_default_fields() {
           'size' => 60,
         ),
         'type' => 'email_textfield',
-        'weight' => 4,
+        'weight' => 5,
       ),
     ),
   );
@@ -207,11 +207,11 @@ function restaurant_reservation_defaultconfig_field_default_fields() {
       'description' => '',
       'display' => array(
         'default' => array(
-          'label' => 'above',
+          'label' => 'inline',
           'module' => 'text',
           'settings' => array(),
           'type' => 'text_default',
-          'weight' => 6,
+          'weight' => 5,
         ),
         'featured' => array(
           'label' => 'above',
@@ -245,7 +245,7 @@ function restaurant_reservation_defaultconfig_field_default_fields() {
           'rows' => 5,
         ),
         'type' => 'text_textarea',
-        'weight' => 6,
+        'weight' => 7,
       ),
     ),
   );
@@ -286,11 +286,11 @@ function restaurant_reservation_defaultconfig_field_default_fields() {
       'description' => '',
       'display' => array(
         'default' => array(
-          'label' => 'above',
+          'label' => 'inline',
           'module' => 'text',
           'settings' => array(),
           'type' => 'text_default',
-          'weight' => 3,
+          'weight' => 0,
         ),
         'featured' => array(
           'label' => 'above',
@@ -324,7 +324,7 @@ function restaurant_reservation_defaultconfig_field_default_fields() {
           'size' => 60,
         ),
         'type' => 'text_textfield',
-        'weight' => 1,
+        'weight' => 2,
       ),
     ),
   );
@@ -356,7 +356,7 @@ function restaurant_reservation_defaultconfig_field_default_fields() {
       'description' => '',
       'display' => array(
         'default' => array(
-          'label' => 'above',
+          'label' => 'inline',
           'module' => 'number',
           'settings' => array(
             'decimal_separator' => '.',
@@ -396,7 +396,7 @@ function restaurant_reservation_defaultconfig_field_default_fields() {
         'module' => 'number',
         'settings' => array(),
         'type' => 'number',
-        'weight' => 3,
+        'weight' => 4,
       ),
     ),
   );
@@ -437,11 +437,11 @@ function restaurant_reservation_defaultconfig_field_default_fields() {
       'description' => '',
       'display' => array(
         'default' => array(
-          'label' => 'above',
+          'label' => 'inline',
           'module' => 'text',
           'settings' => array(),
           'type' => 'text_default',
-          'weight' => 5,
+          'weight' => 4,
         ),
         'featured' => array(
           'label' => 'above',
@@ -475,7 +475,7 @@ function restaurant_reservation_defaultconfig_field_default_fields() {
           'size' => 60,
         ),
         'type' => 'text_textfield',
-        'weight' => 5,
+        'weight' => 6,
       ),
     ),
   );
@@ -511,14 +511,14 @@ function restaurant_reservation_defaultconfig_field_default_fields() {
       'bundle' => 'reservation',
       'default_value' => array(
         0 => array(
-          'value' => 'Pending',
+          'value' => 'pending',
         ),
       ),
       'deleted' => 0,
       'description' => '',
       'display' => array(
         'default' => array(
-          'label' => 'above',
+          'label' => 'inline',
           'module' => 'list',
           'settings' => array(),
           'type' => 'list_default',
@@ -549,7 +549,7 @@ function restaurant_reservation_defaultconfig_field_default_fields() {
         'module' => 'options',
         'settings' => array(),
         'type' => 'options_select',
-        'weight' => 7,
+        'weight' => 8,
       ),
     ),
   );
@@ -584,7 +584,7 @@ function restaurant_reservation_defaultconfig_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'ant_pattern_reservation';
-  $strongarm->value = 'Reservation for [node:field_reservation_name] on [node:field_reservation_date]';
+  $strongarm->value = 'Reservation [node:field_reservation_number]';
   $export['ant_pattern_reservation'] = $strongarm;
 
   $strongarm = new stdClass();
@@ -657,8 +657,64 @@ function restaurant_reservation_defaultconfig_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'pathauto_node_reservation_pattern';
-  $strongarm->value = 'reservations/[random:hash:md5]/[node:title]';
+  $strongarm->value = 'admin/reservations/view/[node:nid]';
   $export['pathauto_node_reservation_pattern'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'restaurant_config_reservation_mail_cancelled_body';
+  $strongarm->value = 'Your reservation has been cancelled. See below for details.';
+  $export['restaurant_config_reservation_mail_cancelled_body'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'restaurant_config_reservation_mail_cancelled_subject';
+  $strongarm->value = 'Reservation cancelled';
+  $export['restaurant_config_reservation_mail_cancelled_subject'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'restaurant_config_reservation_mail_confirmed_body';
+  $strongarm->value = 'Your reservation has been confirmed. See below for details.';
+  $export['restaurant_config_reservation_mail_confirmed_body'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'restaurant_config_reservation_mail_confirmed_subject';
+  $strongarm->value = 'Reservation confirmed';
+  $export['restaurant_config_reservation_mail_confirmed_subject'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'restaurant_config_reservation_mail_pending_body';
+  $strongarm->value = 'We have received your reservation. We will send you a confirmation email shortly.';
+  $export['restaurant_config_reservation_mail_pending_body'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'restaurant_config_reservation_mail_pending_subject';
+  $strongarm->value = 'Reservation received';
+  $export['restaurant_config_reservation_mail_pending_subject'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'restaurant_config_reservation_number_prefix';
+  $strongarm->value = 'RN';
+  $export['restaurant_config_reservation_number_prefix'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'restaurant_config_reservation_show_notifications';
+  $strongarm->value = 1;
+  $export['restaurant_config_reservation_show_notifications'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
