@@ -68,7 +68,10 @@ function restaurant_reservation_update_status_form_submit($form, &$form_state) {
 
   // Update the status for this reservation.
   if (restaurant_reservation_update_status_for_reservation($reservation->nid, $status)) {
-    $message = t('The status for <em>@title</em> has been updated.', array('@title' => $reservation->title));
+    $message = t('The status for <em>@title</em> has been updated. An email has been sent to @mail.', array(
+      '@title' => $reservation->title,
+      '@mail' => entity_metadata_wrapper('node', $reservation)->field_reservation_email->value(),
+    ));
     watchdog('restaurant_reservation', 'Successfully updated the status for reservation @title from @current to @new.', array(
       '@title' => $reservation->title,
       '@current' => $current_status,

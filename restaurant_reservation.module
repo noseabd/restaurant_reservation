@@ -205,6 +205,7 @@ function restaurant_reservation_panopoly_config_info() {
       'title' => t('Email for @name reservations', array('@name' => $name)),
       'description' => t('Message for reservation @name email. The reservation number and the reservation details will be added to the message.', array('@name' => $name)),
       'type' => 'mail_text',
+      'require' => TRUE,
     );
   }
 
