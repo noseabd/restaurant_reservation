@@ -19,7 +19,7 @@ function restaurant_reservation_ctools_plugin_directory($module, $plugin) {
  */
 function restaurant_reservation_init() {
   // Display a message if there are new resevations.
-  if (user_access('administer reservation')) {
+  if (user_access('administer reservation') && panopoly_config_get('reservation_show_notifications')) {
     $pending_reservations = restaurant_reservation_get_reservations_for_status('pending');
     if ($count = count($pending_reservations)) {
       $message = t('There @are <strong>@count</strong> pending @reservations. !link to administer reservations.', array(
@@ -95,6 +95,27 @@ function restaurant_reservation_theme() {
     'restaurant_reservation_status' => array(
       'variables' => array('status' => NULL),
       'file' => 'restaurant_reservation.theme.inc',
+    ),
+  );
+}
+
+/**
+ * Implements hook_panopoly_config_info().
+ */
+function restaurant_reservation_panopoly_config_info() {
+  return array(
+    'reservation' => array(
+      'title' => t('Reservation system'),
+      'description' => t('Configuration for the Reservation system'),
+      'weight' => 50,
+      'config' => array(
+        'reservation_show_notifications' => array(
+          'title' => t('Show notifications'),
+          'description' => t('If enable, the module will show a notification for new reservations.'),
+          'type' => 'boolean',
+          'default' => TRUE,
+        ),
+      ),
     ),
   );
 }
