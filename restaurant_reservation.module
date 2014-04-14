@@ -31,6 +31,13 @@ function restaurant_reservation_init() {
       drupal_set_message($message, 'warning', FALSE);
     }
   }
+
+  // Redirect to reservation admin page when viewing the node.
+  if ($node = menu_get_object()) {
+    if ($node->type == 'reservation') {
+      drupal_goto('admin/reservations/view/' . $node->nid);
+    }
+  }
 }
 
 /**
