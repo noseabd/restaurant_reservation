@@ -110,21 +110,33 @@ function restaurant_reservation_theme() {
  * Implements hook_panopoly_config_info().
  */
 function restaurant_reservation_panopoly_config_info() {
-  return array(
+  $config = array();
+  
+  $config['reservation_show_notifications'] = array(
+    'title' => t('Show notifications'),
+    'description' => t('If enable, the module will show a notification for new reservations.'),
+    'type' => 'boolean',
+    'default' => TRUE,
+  );
+
+  $config['reservation_number_prefix'] = array(
+    'title' => t('Reservation number prefix'),
+    'description' => t('Prefix to use for reservation numbers. Example RN, RESERVATION.'),
+    'type' => 'string',
+    'require' => TRUE,
+    'default' => 'RN',
+  );
+
+  $info = array(
     'reservation' => array(
       'title' => t('Reservation system'),
       'description' => t('Configuration for the Reservation system'),
       'weight' => 50,
-      'config' => array(
-        'reservation_show_notifications' => array(
-          'title' => t('Show notifications'),
-          'description' => t('If enable, the module will show a notification for new reservations.'),
-          'type' => 'boolean',
-          'default' => TRUE,
-        ),
-      ),
+      'config' => $config,
     ),
   );
+
+  return $info;
 }
 
 /**
@@ -149,6 +161,12 @@ function restaurant_reservation_preprocess_views_view_table(&$variables) {
  * Computed field compute callback.
  */
 function computed_field_field_reservation_number_compute(&$entity_field, $entity_type, $entity, $field, $instance, $langcode, $items) {
+  // Return if not empty.
+  if (!empty($entity_field[0]['value'])) {
+    return $entity_field[0]['value'];
+  }
+
+  // Generate a unique id.
   $reservation_nid = $entity->nid;
   $reservation_number = _restaurant_reservation_get_unique_id($reservation_nid);
 
@@ -257,7 +275,7 @@ function restaurant_reservation_update_status_for_reservation($reservation_id, $
 function _restaurant_reservation_get_unique_id($nid) {
   $salt = drupal_get_hash_salt();
   $hash = md5($salt . $nid . time());
-  return 'RN-' . substr($hash, rand(0, strlen($hash) - 5), 5);
+  return panopoly_config_get('reservation_number_prefix') . substr($hash, rand(0, strlen($hash) - 5), 5);
 }
 
 /**
