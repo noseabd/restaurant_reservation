@@ -69,7 +69,7 @@ class RestaurantReservationMigrateReservationsMigration extends Migration {
 
   function prepareRow($row) {
     // Set date as future date.
-    $date = time() + (rand(1, 10) * 24 * 60 * 60);
+    $date = time() + (rand(1, 10) * 24 * rand(20, 60) * 60);
     $row->date = date('Y-m-d H:i:s', $date);
   }
 }
