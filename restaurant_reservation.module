@@ -132,6 +132,19 @@ function restaurant_reservation_view_mode_templates() {
 }
 
 /**
+ * Implementation of hook_forms()
+ */
+function restaurant_reservation_forms($form_id, $args) {
+  $forms = array();
+  if (strpos($form_id, 'restaurant_reservation_update_status_form') === 0) {
+    $forms[$form_id] = array(
+      'callback' => 'restaurant_reservation_update_status_form',
+    );
+  }
+  return $forms;
+}
+
+/**
  * Implements hook_node_update().
  */
 function restaurant_reservation_node_update($node) {
