@@ -393,7 +393,7 @@ function restaurant_reservation_update_status_for_reservation($reservation_id, $
  * @param $nid
  *  The node id of the reservation node.
  *
- * @return
+ * @return String
  *  A unique id.
  */
 function _restaurant_reservation_get_unique_id($nid) {
