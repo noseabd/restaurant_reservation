@@ -742,8 +742,8 @@ function restaurant_reservation_defaultconfig_user_default_permissions() {
   );
 
   // Exported permission: 'administer reservation'.
-  $permissions['administer reservation'] = array(
-    'name' => 'administer reservation',
+  $permissions['administer reservations'] = array(
+    'name' => 'administer reservations',
     'roles' => array(
       'administrator' => 'administrator',
     ),

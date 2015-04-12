@@ -192,7 +192,7 @@ function restaurant_reservation_default_page_manager_pages() {
       0 => array(
         'name' => 'perm',
         'settings' => array(
-          'perm' => 'administer reservation',
+          'perm' => 'administer reservations',
         ),
         'context' => 'logged-in-user',
         'not' => FALSE,
