@@ -25,7 +25,7 @@ function restaurant_reservation_views_default_views() {
   $handler->display->display_options['title'] = 'Reservations';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['access']['type'] = 'perm';
-  $handler->display->display_options['access']['perm'] = 'administer reservation';
+  $handler->display->display_options['access']['perm'] = 'administer reservations';
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['query']['options']['distinct'] = TRUE;
