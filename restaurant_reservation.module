@@ -21,7 +21,7 @@ function restaurant_reservation_init() {
   // Display a message if there are new resevations.
   $notification_paths = implode("\n", _restaurant_reservation_get_notification_paths());
   if (drupal_match_path(current_path(), $notification_paths)) {
-    if (user_access('administer reservation') && panopoly_config_get('reservation_show_notifications')) {
+    if (user_access('administer reservations') && panopoly_config_get('reservation_show_notifications')) {
       $pending_reservations = restaurant_reservation_get_reservations_for_status('pending');
       if ($count = count($pending_reservations)) {
         $message = t('There @are <strong>@count</strong> pending @reservations. !link to administer reservations.', array(
@@ -99,7 +99,7 @@ function restaurant_reservation_menu_local_tasks_alter(&$data, $router_item, $ro
  */
 function restaurant_reservation_permission() {
   return array(
-    'administer reservation' => array(
+    'administer reservations' => array(
       'title' => t('Administer Reservations'),
       'description' => t('Access the reservation admininstration pages and manage reservations.'),
     ),
