@@ -1,7 +1,7 @@
 name = Restaurant Reservation
 description = Reservation system for the Restaurant Distribution.
 core = 7.x
-package = Restaurant
+package = Open Restaurant
 version = 7.x-1.0
 project = restaurant_reservation
 dependencies[] = auto_nodetitle
