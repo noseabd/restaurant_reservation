@@ -16,11 +16,19 @@ function restaurant_reservation_default_page_manager_pages() {
   $page->admin_title = 'Reservation';
   $page->admin_description = '';
   $page->path = 'reservation';
-  $page->access = array(
-    'type' => 'none',
-    'settings' => NULL,
+  $page->access = array();
+  $page->menu = array(
+    'type' => 'normal',
+    'title' => 'Book a Table',
+    'name' => 'main-menu',
+    'weight' => '100',
+    'parent' => array(
+      'type' => 'none',
+      'title' => '',
+      'name' => 'navigation',
+      'weight' => '0',
+    ),
   );
-  $page->menu = array();
   $page->arguments = array();
   $page->conf = array(
     'admin_paths' => FALSE,
@@ -29,502 +37,160 @@ function restaurant_reservation_default_page_manager_pages() {
   $handler = new stdClass();
   $handler->disabled = FALSE; /* Edit this to true to make a default handler disabled initially */
   $handler->api_version = 1;
-  $handler->name = 'page_reservation_panel_context_2';
+  $handler->name = 'page_reservation__panel_context_4b00a748-fbd1-4945-ae7f-4724f8345b1e';
   $handler->task = 'page';
   $handler->subtask = 'reservation';
   $handler->handler = 'panel_context';
-  $handler->weight = -30;
+  $handler->weight = 0;
   $handler->conf = array(
-    'title' => 'Reservation',
+    'title' => 'Panel',
     'no_blocks' => 0,
     'pipeline' => 'ipe',
     'body_classes_to_remove' => '',
     'body_classes_to_add' => '',
     'css_id' => '',
     'css' => '',
-    'contexts' => array(
-      0 => array(
-        'identifier' => 'Node add form',
-        'keyword' => 'node_add',
-        'name' => 'node_add_form',
-        'type' => 'reservation',
-        'id' => 1,
-      ),
-    ),
+    'contexts' => array(),
     'relationships' => array(),
-    'panels_everywhere_site_template' => '-1',
-    'panels_breadcrumbs_state' => 1,
-    'panels_breadcrumbs_titles' => 'Reservation',
-    'panels_breadcrumbs_paths' => '',
-    'panels_breadcrumbs_home' => 1,
   );
   $display = new panels_display();
-  $display->layout = 'radix_burr';
+  $display->layout = 'layout_reservation';
   $display->layout_settings = array();
   $display->panel_settings = array(
     'style_settings' => array(
       'default' => NULL,
-      'contentmain' => NULL,
-      'sidebar' => NULL,
+      'region_a' => NULL,
+      'region_b' => NULL,
+      'region_c' => NULL,
+      'region_d' => NULL,
     ),
   );
   $display->cache = array();
-  $display->title = 'Make a Reservation';
+  $display->title = 'Book a Table';
+  $display->uuid = '3bdc0150-f5f4-4f37-a984-65bc967b3d52';
   $display->content = array();
   $display->panels = array();
-    $pane = new stdClass();
-    $pane->pid = 'new-1';
-    $pane->panel = 'contentmain';
-    $pane->type = 'form';
-    $pane->subtype = 'form';
-    $pane->shown = TRUE;
-    $pane->access = array();
-    $pane->configuration = array(
-      'context' => 'context_node_add_form_1',
-      'override_title' => 1,
-      'override_title_text' => '',
-    );
-    $pane->cache = array();
-    $pane->style = array(
-      'settings' => NULL,
-    );
-    $pane->css = array();
-    $pane->extras = array();
-    $pane->position = 0;
-    $pane->locks = array();
-    $display->content['new-1'] = $pane;
-    $display->panels['contentmain'][0] = 'new-1';
-    $pane = new stdClass();
-    $pane->pid = 'new-2';
-    $pane->panel = 'sidebar';
-    $pane->type = 'fieldable_panels_pane';
-    $pane->subtype = 'fpid:3';
-    $pane->shown = TRUE;
-    $pane->access = array();
-    $pane->configuration = array(
-      'view_mode' => 'Full',
-    );
-    $pane->cache = array();
-    $pane->style = array(
-      'settings' => NULL,
-    );
-    $pane->css = array(
-      'css_id' => '',
-      'css_class' => 'panel-primary',
-    );
-    $pane->extras = array();
-    $pane->position = 0;
-    $pane->locks = array();
-    $display->content['new-2'] = $pane;
-    $display->panels['sidebar'][0] = 'new-2';
-    $pane = new stdClass();
-    $pane->pid = 'new-3';
-    $pane->panel = 'sidebar';
-    $pane->type = 'opening_hours';
-    $pane->subtype = 'opening_hours';
-    $pane->shown = TRUE;
-    $pane->access = array();
-    $pane->configuration = array(
-      'title' => 'Opening Hours',
-      'form_build_id' => 'form-ITv1Yv-xZ95Gj_qHj61ZofOMftPnNwVSrv2jCQCVLiQ',
-      'form_token' => 'YFAU1NkQDw9CRHtJBCkDFhVMgQ0IG0CweblKVjgshKs',
-      'form_id' => 'restaurant_plugins_opening_hours_content_type_form',
-      'override_title' => 0,
-      'override_title_text' => '',
-    );
-    $pane->cache = array();
-    $pane->style = array(
-      'settings' => NULL,
-    );
-    $pane->css = array(
-      'css_id' => '',
-      'css_class' => 'panel-default',
-    );
-    $pane->extras = array();
-    $pane->position = 1;
-    $pane->locks = array();
-    $display->content['new-3'] = $pane;
-    $display->panels['sidebar'][1] = 'new-3';
-    $pane = new stdClass();
-    $pane->pid = 'new-4';
-    $pane->panel = 'sidebar';
-    $pane->type = 'contact_info';
-    $pane->subtype = 'contact_info';
-    $pane->shown = TRUE;
-    $pane->access = array();
-    $pane->configuration = array(
-      'title' => 'Contact',
-      'form_build_id' => 'form-tlEJ6-tQM6n5K-Em9h2aw2p6R4eDGZ0tAzvPBvn5U8s',
-      'form_token' => 'k7BKoO-18s_IxR5JTmlYMSc1J0iL91vHIi0-FStxmnc',
-      'form_id' => 'restaurant_plugins_contact_info_content_type_form',
-      'override_title' => 0,
-      'override_title_text' => '',
-    );
-    $pane->cache = array();
-    $pane->style = array(
-      'settings' => NULL,
-    );
-    $pane->css = array(
-      'css_id' => '',
-      'css_class' => 'panel-default',
-    );
-    $pane->extras = array();
-    $pane->position = 2;
-    $pane->locks = array();
-    $display->content['new-4'] = $pane;
-    $display->panels['sidebar'][2] = 'new-4';
+  $pane = new stdClass();
+  $pane->pid = 'new-2f44501b-11fd-467a-af95-a972c95a9153';
+  $pane->panel = 'region_a';
+  $pane->type = 'fieldable_panels_pane';
+  $pane->subtype = 'fpid:19';
+  $pane->shown = TRUE;
+  $pane->access = array();
+  $pane->configuration = array(
+    'view_mode' => 'full',
+    'fieldable_panels_pane' => (object) array(
+      'bundle' => 'slideshow',
+      'language' => 'und',
+      'is_new' => TRUE,
+      'title' => '',
+      'link' => 0,
+      'path' => '',
+      'reusable' => 1,
+      'admin_title' => 'Book a Table',
+      'admin_description' => '',
+      'category' => 'Reusable Content',
+      'vid' => '42',
+      'current_vid' => '',
+      'revision' => 1,
+      'fpid' => '19',
+      'field_slideshow_slides' => array(
+        'und' => array(
+          0 => array(
+            'value' => '19',
+          ),
+        ),
+      ),
+      'log' => '',
+      'created' => 1440181175,
+      'timestamp' => 1440181175,
+      'changed' => 1440181175,
+      'uuid' => '',
+      'uid' => '1',
+      'vuuid' => '',
+    ),
+  );
+  $pane->cache = array();
+  $pane->style = array();
+  $pane->css = array();
+  $pane->extras = array();
+  $pane->position = 0;
+  $pane->locks = array();
+  $pane->uuid = '2f44501b-11fd-467a-af95-a972c95a9153';
+  $display->content['new-2f44501b-11fd-467a-af95-a972c95a9153'] = $pane;
+  $display->panels['region_a'][0] = 'new-2f44501b-11fd-467a-af95-a972c95a9153';
+  $pane = new stdClass();
+  $pane->pid = 'new-2ad0a668-7fed-4889-800c-961b103011e2';
+  $pane->panel = 'region_c';
+  $pane->type = 'fieldable_panels_pane';
+  $pane->subtype = 'fpid:20';
+  $pane->shown = TRUE;
+  $pane->access = array();
+  $pane->configuration = array(
+    'view_mode' => 'full',
+    'fieldable_panels_pane' => (object) array(
+      'bundle' => 'text',
+      'language' => 'und',
+      'is_new' => TRUE,
+      'title' => 'How to book a table',
+      'link' => 0,
+      'path' => '',
+      'reusable' => 1,
+      'admin_title' => 'How to book a table',
+      'admin_description' => '',
+      'category' => 'Reusable Content',
+      'vid' => '43',
+      'current_vid' => '',
+      'revision' => 1,
+      'fpid' => '20',
+      'field_basic_text_text' => array(
+        'und' => array(
+          0 => array(
+            'value' => '<h4>Step 1</h4><p>Fill in the reservation form with your contact information, the date of your reservation and the number of persons.</p><h4>Step 2</h4><p>Wait for our email that confirms that your reservation has been received.</p><h4>Step 3</h4><p>We will email you or call you back when your reservation has been confirmed.</p>',
+            'format' => 'panopoly_wysiwyg_text',
+          ),
+        ),
+      ),
+      'log' => '',
+      'created' => 1440181246,
+      'timestamp' => 1440181246,
+      'changed' => 1440181246,
+      'uuid' => '',
+      'uid' => '1',
+      'vuuid' => '',
+    ),
+  );
+  $pane->cache = array();
+  $pane->style = array();
+  $pane->css = array();
+  $pane->extras = array();
+  $pane->position = 0;
+  $pane->locks = array();
+  $pane->uuid = '2ad0a668-7fed-4889-800c-961b103011e2';
+  $display->content['new-2ad0a668-7fed-4889-800c-961b103011e2'] = $pane;
+  $display->panels['region_c'][0] = 'new-2ad0a668-7fed-4889-800c-961b103011e2';
+  $pane = new stdClass();
+  $pane->pid = 'new-97228bdc-7cb2-4e12-99fe-983ffa767ac3';
+  $pane->panel = 'region_d';
+  $pane->type = 'reservation_form';
+  $pane->subtype = 'reservation_form';
+  $pane->shown = TRUE;
+  $pane->access = array();
+  $pane->configuration = array();
+  $pane->cache = array();
+  $pane->style = array();
+  $pane->css = array();
+  $pane->extras = array();
+  $pane->position = 0;
+  $pane->locks = array();
+  $pane->uuid = '97228bdc-7cb2-4e12-99fe-983ffa767ac3';
+  $display->content['new-97228bdc-7cb2-4e12-99fe-983ffa767ac3'] = $pane;
+  $display->panels['region_d'][0] = 'new-97228bdc-7cb2-4e12-99fe-983ffa767ac3';
   $display->hide_title = PANELS_TITLE_FIXED;
   $display->title_pane = '0';
   $handler->conf['display'] = $display;
   $page->default_handlers[$handler->name] = $handler;
   $pages['reservation'] = $page;
-
-  $page = new stdClass();
-  $page->disabled = FALSE; /* Edit this to true to make a default page disabled initially */
-  $page->api_version = 1;
-  $page->name = 'view_reservation';
-  $page->task = 'page';
-  $page->admin_title = 'View reservation';
-  $page->admin_description = '';
-  $page->path = 'admin/reservations/view/%reservation_id';
-  $page->access = array(
-    'plugins' => array(
-      0 => array(
-        'name' => 'perm',
-        'settings' => array(
-          'perm' => 'administer reservations',
-        ),
-        'context' => 'logged-in-user',
-        'not' => FALSE,
-      ),
-    ),
-    'logic' => 'and',
-    'type' => 'none',
-    'settings' => NULL,
-  );
-  $page->menu = array();
-  $page->arguments = array(
-    'reservation_id' => array(
-      'id' => 1,
-      'identifier' => 'Node: ID',
-      'name' => 'entity_id:node',
-      'settings' => array(),
-    ),
-  );
-  $page->conf = array(
-    'admin_paths' => FALSE,
-  );
-  $page->default_handlers = array();
-  $handler = new stdClass();
-  $handler->disabled = FALSE; /* Edit this to true to make a default handler disabled initially */
-  $handler->api_version = 1;
-  $handler->name = 'page_view_reservation_panel_context';
-  $handler->task = 'page';
-  $handler->subtask = 'view_reservation';
-  $handler->handler = 'panel_context';
-  $handler->weight = 0;
-  $handler->conf = array(
-    'title' => 'Panel',
-    'no_blocks' => 0,
-    'pipeline' => 'standard',
-    'body_classes_to_remove' => '',
-    'body_classes_to_add' => '',
-    'css_id' => '',
-    'css' => '',
-    'contexts' => array(),
-    'relationships' => array(),
-    'panels_breadcrumbs_state' => 1,
-    'panels_breadcrumbs_titles' => 'Administration
-Reservations',
-    'panels_breadcrumbs_paths' => 'admin
-admin/reservations/%reservation_id:field_reservation_status',
-    'panels_breadcrumbs_home' => 1,
-  );
-  $display = new panels_display();
-  $display->layout = 'sutro';
-  $display->layout_settings = array();
-  $display->panel_settings = array(
-    'style_settings' => array(
-      'default' => NULL,
-      'contentmain' => NULL,
-      'header' => NULL,
-      'column1' => NULL,
-      'column2' => NULL,
-      'footer' => NULL,
-    ),
-  );
-  $display->cache = array();
-  $display->title = '%reservation_id:title';
-  $display->content = array();
-  $display->panels = array();
-    $pane = new stdClass();
-    $pane->pid = 'new-5';
-    $pane->panel = 'column1';
-    $pane->type = 'entity_field';
-    $pane->subtype = 'node:field_reservation_number';
-    $pane->shown = TRUE;
-    $pane->access = array();
-    $pane->configuration = array(
-      'label' => 'title',
-      'formatter' => 'computed_field_plain',
-      'delta_limit' => 0,
-      'delta_offset' => '0',
-      'delta_reversed' => FALSE,
-      'formatter_settings' => array(),
-      'context' => array(),
-      'override_title' => 0,
-      'override_title_text' => '',
-    );
-    $pane->cache = array();
-    $pane->style = array(
-      'settings' => NULL,
-    );
-    $pane->css = array();
-    $pane->extras = array();
-    $pane->position = 0;
-    $pane->locks = array();
-    $display->content['new-5'] = $pane;
-    $display->panels['column1'][0] = 'new-5';
-    $pane = new stdClass();
-    $pane->pid = 'new-6';
-    $pane->panel = 'column1';
-    $pane->type = 'entity_field';
-    $pane->subtype = 'node:field_reservation_name';
-    $pane->shown = TRUE;
-    $pane->access = array();
-    $pane->configuration = array(
-      'label' => 'title',
-      'formatter' => 'text_default',
-      'delta_limit' => 0,
-      'delta_offset' => '0',
-      'delta_reversed' => FALSE,
-      'formatter_settings' => array(
-        'include_map' => 1,
-        'include_static_map' => 0,
-        'include_link' => 0,
-        'include_text' => 0,
-        'iframe_height' => '200',
-        'iframe_width' => '200',
-        'zoom_level' => '14',
-        'information_bubble' => 1,
-        'link_text' => 'View larger map',
-        'map_type' => 'm',
-        'langcode' => 'en',
-      ),
-      'context' => array(),
-      'override_title' => 0,
-      'override_title_text' => '',
-    );
-    $pane->cache = array();
-    $pane->style = array(
-      'settings' => NULL,
-    );
-    $pane->css = array();
-    $pane->extras = array();
-    $pane->position = 1;
-    $pane->locks = array();
-    $display->content['new-6'] = $pane;
-    $display->panels['column1'][1] = 'new-6';
-    $pane = new stdClass();
-    $pane->pid = 'new-7';
-    $pane->panel = 'column1';
-    $pane->type = 'entity_field';
-    $pane->subtype = 'node:field_reservation_email';
-    $pane->shown = TRUE;
-    $pane->access = array();
-    $pane->configuration = array(
-      'label' => 'title',
-      'formatter' => 'email_default',
-      'delta_limit' => 0,
-      'delta_offset' => '0',
-      'delta_reversed' => FALSE,
-      'formatter_settings' => array(),
-      'context' => array(),
-      'override_title' => 0,
-      'override_title_text' => '',
-    );
-    $pane->cache = array();
-    $pane->style = array(
-      'settings' => NULL,
-    );
-    $pane->css = array();
-    $pane->extras = array();
-    $pane->position = 2;
-    $pane->locks = array();
-    $display->content['new-7'] = $pane;
-    $display->panels['column1'][2] = 'new-7';
-    $pane = new stdClass();
-    $pane->pid = 'new-8';
-    $pane->panel = 'column1';
-    $pane->type = 'entity_field';
-    $pane->subtype = 'node:field_reservation_phone';
-    $pane->shown = TRUE;
-    $pane->access = array();
-    $pane->configuration = array(
-      'label' => 'title',
-      'formatter' => 'text_default',
-      'delta_limit' => 0,
-      'delta_offset' => '0',
-      'delta_reversed' => FALSE,
-      'formatter_settings' => array(),
-      'context' => array(),
-      'override_title' => 0,
-      'override_title_text' => '',
-    );
-    $pane->cache = array();
-    $pane->style = array(
-      'settings' => NULL,
-    );
-    $pane->css = array();
-    $pane->extras = array();
-    $pane->position = 3;
-    $pane->locks = array();
-    $display->content['new-8'] = $pane;
-    $display->panels['column1'][3] = 'new-8';
-    $pane = new stdClass();
-    $pane->pid = 'new-9';
-    $pane->panel = 'column1';
-    $pane->type = 'entity_field';
-    $pane->subtype = 'node:field_reservation_persons';
-    $pane->shown = TRUE;
-    $pane->access = array();
-    $pane->configuration = array(
-      'label' => 'title',
-      'formatter' => 'number_integer',
-      'delta_limit' => 0,
-      'delta_offset' => '0',
-      'delta_reversed' => FALSE,
-      'formatter_settings' => array(
-        'thousand_separator' => ' ',
-        'prefix_suffix' => 1,
-      ),
-      'context' => array(),
-      'override_title' => 0,
-      'override_title_text' => '',
-    );
-    $pane->cache = array();
-    $pane->style = array(
-      'settings' => NULL,
-    );
-    $pane->css = array();
-    $pane->extras = array();
-    $pane->position = 4;
-    $pane->locks = array();
-    $display->content['new-9'] = $pane;
-    $display->panels['column1'][4] = 'new-9';
-    $pane = new stdClass();
-    $pane->pid = 'new-10';
-    $pane->panel = 'column1';
-    $pane->type = 'entity_field';
-    $pane->subtype = 'node:field_reservation_date';
-    $pane->shown = TRUE;
-    $pane->access = array();
-    $pane->configuration = array(
-      'label' => 'title',
-      'formatter' => 'date_default',
-      'delta_limit' => 0,
-      'delta_offset' => '0',
-      'delta_reversed' => FALSE,
-      'formatter_settings' => array(
-        'format_type' => 'long',
-        'multiple_number' => '',
-        'multiple_from' => '',
-        'multiple_to' => '',
-        'fromto' => 'both',
-      ),
-      'context' => array(),
-      'override_title' => 0,
-      'override_title_text' => '',
-    );
-    $pane->cache = array();
-    $pane->style = array(
-      'settings' => NULL,
-    );
-    $pane->css = array();
-    $pane->extras = array();
-    $pane->position = 5;
-    $pane->locks = array();
-    $display->content['new-10'] = $pane;
-    $display->panels['column1'][5] = 'new-10';
-    $pane = new stdClass();
-    $pane->pid = 'new-11';
-    $pane->panel = 'column1';
-    $pane->type = 'entity_field';
-    $pane->subtype = 'node:field_reservation_message';
-    $pane->shown = TRUE;
-    $pane->access = array();
-    $pane->configuration = array(
-      'label' => 'title',
-      'formatter' => 'text_default',
-      'delta_limit' => 0,
-      'delta_offset' => '0',
-      'delta_reversed' => FALSE,
-      'formatter_settings' => array(),
-      'context' => array(),
-      'override_title' => 0,
-      'override_title_text' => '',
-    );
-    $pane->cache = array();
-    $pane->style = array(
-      'settings' => NULL,
-    );
-    $pane->css = array();
-    $pane->extras = array();
-    $pane->position = 6;
-    $pane->locks = array();
-    $display->content['new-11'] = $pane;
-    $display->panels['column1'][6] = 'new-11';
-    $pane = new stdClass();
-    $pane->pid = 'new-12';
-    $pane->panel = 'column2';
-    $pane->type = 'entity_field';
-    $pane->subtype = 'node:field_reservation_status';
-    $pane->shown = TRUE;
-    $pane->access = array();
-    $pane->configuration = array(
-      'label' => 'title',
-      'formatter' => 'list_default',
-      'delta_limit' => 0,
-      'delta_offset' => '0',
-      'delta_reversed' => FALSE,
-      'formatter_settings' => array(),
-      'context' => array(),
-      'override_title' => 0,
-      'override_title_text' => '',
-    );
-    $pane->cache = array();
-    $pane->style = array(
-      'settings' => NULL,
-    );
-    $pane->css = array();
-    $pane->extras = array();
-    $pane->position = 0;
-    $pane->locks = array();
-    $display->content['new-12'] = $pane;
-    $display->panels['column2'][0] = 'new-12';
-    $pane = new stdClass();
-    $pane->pid = 'new-13';
-    $pane->panel = 'column2';
-    $pane->type = 'reservation_update_status_form';
-    $pane->subtype = 'reservation_update_status_form';
-    $pane->shown = TRUE;
-    $pane->access = array();
-    $pane->configuration = array();
-    $pane->cache = array();
-    $pane->style = array(
-      'settings' => NULL,
-    );
-    $pane->css = array();
-    $pane->extras = array();
-    $pane->position = 1;
-    $pane->locks = array();
-    $display->content['new-13'] = $pane;
-    $display->panels['column2'][1] = 'new-13';
-  $display->hide_title = PANELS_TITLE_FIXED;
-  $display->title_pane = 'new-9';
-  $handler->conf['display'] = $display;
-  $page->default_handlers[$handler->name] = $handler;
-  $pages['view_reservation'] = $page;
 
   return $pages;
 

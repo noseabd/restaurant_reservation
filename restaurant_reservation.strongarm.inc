@@ -86,6 +86,12 @@ function restaurant_reservation_strongarm() {
       'token' => array(
         'custom_settings' => FALSE,
       ),
+      'grid' => array(
+        'custom_settings' => FALSE,
+      ),
+      'stacked' => array(
+        'custom_settings' => FALSE,
+      ),
     ),
     'extra_fields' => array(
       'form' => array(

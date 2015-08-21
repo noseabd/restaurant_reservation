@@ -5,53 +5,28 @@
  */
 
 /**
- * Implements hook_form_FORM_ID_alter().
+ * Implements hook_form_alter().
  */
-function restaurant_reservation_form_reservation_node_form_alter(&$form, &$form_state) {
+function restaurant_reservation_form_eck__entity__form_add_reservation_reservation_alter(&$form, &$form_state, $form_id) {
   // When the form is not shown on admin pages, make some changes.
-  if (!drupal_match_path(current_path(), "node/*/reservation\nnode/*/edit")) {
-    // Remove additional fields.
-    $form['additional_settings']['#access'] = FALSE;
-    $form['revision_information']['#access'] = FALSE;
-    $form['path']['#access'] = FALSE;
+  if (!drupal_match_path(current_path(), "admin/structure/entity-type/reservation/reservation/*")) {
+    // Set the status to pending by default.
+    $language = $form['field_reservation_status']['#language'];
+    $form['field_reservation_status'][$language]['#value'] = 'pending';
+    $form['field_reservation_status'][$language]['#access'] = FALSE;
 
-    // Add an after_build callback.
-    $form['#after_build'][] = 'restaurant_reservation_form_reservation_node_form_after_build';
+    // Change the value of the submit buttton.
+    $form['actions']['submit']['#value'] = t('Submit Reservation');
 
     // Add a custom submit callback.
-    $form['actions']['submit']['#submit'][] = 'restaurant_reservation_form_reservation_node_form_submit';
-
-    // Hide the status field.
-    $form['field_reservation_status']['#access'] = FALSE;
-
-    // Remove some classes.
-    $node_form_class_key = array_search('node-form', $form['#attributes']['class']);
-    unset($form['#attributes']['class'][$node_form_class_key]);
+    $form['#submit'][] = 'restaurant_reservation_form_eck__entity__form_add_reservation_reservation_submit';
   }
-}
-
-/**
- * Reservation form after_build callback.
- */
-function restaurant_reservation_form_reservation_node_form_after_build($form) {
-  // Hide the draft button.
-  if (isset($form['actions']['draft'])) {
-    $form['actions']['draft']['#access'] = FALSE;
-  }
-
-  // Change the value of the submit buttton.
-  $form['actions']['submit']['#value'] = t('Submit Reservation');
-
-  // Remove theme wrappers for date field.
-  $form['field_reservation_date']['und'][0]['#theme_wrappers'] = array();
-
-  return $form;
 }
 
 /**
  * Custom submit callback for reservation form.
  */
-function restaurant_reservation_form_reservation_node_form_submit($form, &$form_state) {
+function restaurant_reservation_form_eck__entity__form_add_reservation_reservation_submit($form, &$form_state) {
   // Clear all messages.
   drupal_get_messages();
 
@@ -59,5 +34,5 @@ function restaurant_reservation_form_reservation_node_form_submit($form, &$form_
   drupal_set_message(panopoly_config_get('reservation_form_success_message', ''));
 
   // Redirect to the reservation page.
-  $form_state['redirect'] = 'reservation';
+  $form_state['redirect'] = current_path();
 }

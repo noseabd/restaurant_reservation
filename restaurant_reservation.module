@@ -5,74 +5,35 @@
  */
 
 include_once 'restaurant_reservation.features.inc';
+include_once 'restaurant_reservation.config.inc';
 include_once 'restaurant_reservation.alter.inc';
 
 /**
  * Implements hook_ctools_plugin_directory().
- */ 
+ */
 function restaurant_reservation_ctools_plugin_directory($module, $plugin) {
   return 'plugins/' . $plugin;
-}
-
-/**
- * Implements hook_init().
- */
-function restaurant_reservation_init() {
-  // Display a message if there are new resevations.
-  $notification_paths = implode("\n", _restaurant_reservation_get_notification_paths());
-  if (drupal_match_path(current_path(), $notification_paths)) {
-    if (user_access('administer reservations') && panopoly_config_get('reservation_show_notifications')) {
-      $pending_reservations = restaurant_reservation_get_reservations_for_status('pending');
-      if ($count = count($pending_reservations)) {
-        $message = t('There @are <strong>@count</strong> pending @reservations. !link to administer reservations.', array(
-          '@are' => format_plural($count, t('is'), t('are')),
-          '@reservations' => format_plural($count, t('reservation'), t('reservations')),
-          '@count' => $count,
-          '!link' => l(t('Click here'), 'admin/reservations/manage/pending'),
-        ));
-        drupal_set_message($message, 'warning', FALSE);
-      }
-    }
-  }
-
-  // Redirect to reservation admin page when viewing the node.
-  if ($node = menu_get_object()) {
-    if ($node->type == 'reservation' && arg(2) == '' && !drupal_match_path(current_path(), 'admin/reservations/view/*')) {
-      drupal_goto('admin/reservations/view/' . $node->nid);
-    }
-  }
 }
 
 /**
  * Implements hook_menu().
  */
 function restaurant_reservation_menu() {
-
   $items['admin/reservations/add'] = array(
-    'title' => 'Add Reservation',
-    'weight' => 10,
+    'title' => 'Add reservation',
+    'weight' => -1,
     'page callback' => 'restaurant_reservation_add_reservation_admin',
     'access arguments' => array('administer reservations'),
     'file' => 'restaurant_reservation.admin.inc',
-    'type' => MENU_LOCAL_TASK,
+    'type' => MENU_CALLBACK,
   );
 
-  $items['admin/reservations/manage'] = array(
-    'title' => 'Manage reservations',
-    'weight' => 20,
-    'page callback' => 'restaurant_reservation_manage_reservations_admin',
+  $items['admin/reservations/%'] = array(
+    'title' => 'View reservation',
+    'page callback' => 'restaurant_reservation_view_reservation',
+    'page arguments' => array(2),
     'access arguments' => array('administer reservations'),
     'file' => 'restaurant_reservation.admin.inc',
-    'type' => MENU_LOCAL_TASK,
-  );
-
-  $items['admin/reservations/calendar'] = array(
-    'title' => 'Calendar',
-    'weight' => 30,
-    'page callback' => 'restaurant_reservation_calendar_admin',
-    'access arguments' => array('administer reservations'),
-    'file' => 'restaurant_reservation.admin.inc',
-    'type' => MENU_LOCAL_TASK,
   );
 
   return $items;
@@ -82,13 +43,42 @@ function restaurant_reservation_menu() {
  * Implements hook_menu_local_tasks_alter().
  */
 function restaurant_reservation_menu_local_tasks_alter(&$data, $router_item, $root_path) {
+  // Add tabs to reservation pages.
+  if (drupal_match_path($root_path, "admin/reservations\nadmin/reservations/*")) {
+    // Reservations tab.
+    $data['tabs'][0]['output'][] = array(
+      '#theme' => 'menu_local_task',
+      '#link' => array(
+        'title' => t('Reservations'),
+        'href' => 'admin/reservations',
+        'localized_options' => array(),
+      ),
+    );
+
+    // Calendar tab.
+    $data['tabs'][0]['output'][] = array(
+      '#theme' => 'menu_local_task',
+      '#link' => array(
+        'title' => t('Calendar'),
+        'href' => 'admin/reservations/calendar',
+        'localized_options' => array(),
+      ),
+    );
+
+    $data['tabs'][0]['count'] = count($data['tabs'][0]['output']);
+  }
+
   // Add action link to 'admin/reservations/add' on 'admin/reservations' page.
   if (drupal_match_path($root_path, "admin/reservations\nadmin/reservations/*")) {
     $item = menu_get_item('admin/reservations/add');
     if ($item['access']) {
       $data['actions']['output'][] = array(
         '#theme' => 'menu_local_action',
-        '#link' => $item,
+        '#link' => array(
+          'title' => t('Add reservation'),
+          'href' => 'admin/reservations/add',
+          'localized_options' => array(),
+        ),
       );
     }
   }
@@ -127,45 +117,131 @@ function restaurant_reservation_theme() {
  */
 function restaurant_reservation_view_mode_templates() {
   return array(
-    'node__reservation',
+    'reservation__reservation__full',
+    'reservation__reservation__email',
   );
 }
 
 /**
- * Implementation of hook_forms()
+ * Implements hook_field_extra_fields().
  */
-function restaurant_reservation_forms($form_id, $args) {
-  $forms = array();
-  if (strpos($form_id, 'restaurant_reservation_update_status_form') === 0) {
-    $forms[$form_id] = array(
-      'callback' => 'restaurant_reservation_update_status_form',
-    );
-  }
-  return $forms;
+function restaurant_reservation_field_extra_fields() {
+  $extras['reservation']['reservation']['display']['status_form'] = array(
+    'label' => t('Status form'),
+    'description' => t('Reservation status form'),
+    'weight' => 99,
+  );
+  return $extras;
 }
 
 /**
- * Implements hook_node_update().
+ * Implements hook_preprocess().
  */
-function restaurant_reservation_node_update($node) {
-  if ($node->type == 'reservation') {
-    $current_status = entity_metadata_wrapper('node', $node)->field_reservation_status->value();
-    $old_status = entity_metadata_wrapper('node', $node->original)->field_reservation_status->value();
-
-    // If status has been updated, send an mail.
-    if ($current_status != $old_status) {
-      restaurant_reservation_send_update_status_mail($node);
+function restaurant_reservation_preprocess_entity(&$variables) {
+  if ($variables['entity_type'] == 'reservation') {
+    if ($variables['view_mode'] == 'full') {
+      // Add the form to the template.
+      $entity = $variables['elements']['#entity'];
+      $form = drupal_get_form('restaurant_reservation_update_status_form', $entity);
+      $variables['content']['status_form'] = $form;
     }
   }
 }
 
 /**
- * Implements hook_node_insert().
+ * Update status form.
  */
-function restaurant_reservation_node_insert($node) {
-  if ($node->type == 'reservation') {
-    $current_status = entity_metadata_wrapper('node', $node)->field_reservation_status->value();
-    restaurant_reservation_send_update_status_mail($node);
+function restaurant_reservation_update_status_form($form, &$form_state, $reservation) {
+  $form_state['#reservation'] = $reservation;
+  $wrapper = entity_metadata_wrapper('reservation', $reservation);
+
+  // Get all available statuses.
+  $statuses = restaurant_reservation_get_statuses();
+
+  // Get current status.
+  $current_status = $form_state['#current_status'] = entity_metadata_wrapper('reservation', $reservation)->field_reservation_status->value();
+
+  $description = t('An email will be sent to %name when you change the status. You can customize the email template !here.', array(
+    '%name' => $wrapper->field_reservation_name->value(),
+    '!here' => l(t('here'), '/admin/config/restaurant/reservation'),
+  ));
+
+  $form['status'] = array(
+    '#title' => t('Status'),
+    '#description' => $description,
+    '#type' => 'select',
+    '#options' => $statuses,
+    '#default_value' => $current_status,
+    '#required' => TRUE,
+  );
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Update'),
+  );
+
+  return $form;
+}
+
+
+/**
+ * Submit handler for restaurant_reservation_update_status_form.
+ */
+function restaurant_reservation_update_status_form_submit($form, &$form_state) {
+  $reservation = $form_state['#reservation'];
+  $values = $form_state['values'];
+  $current_status = $form_state['#current_status'];
+  $status = $values['status'];
+  $wrapper = entity_metadata_wrapper('reservation', $reservation);
+
+  // Update the status for this reservation.
+  if (restaurant_reservation_update_status_for_reservation($reservation, $status)) {
+    $message = t('The status for reservation <em>@number</em> has been updated.', array(
+      '@number' => $wrapper->field_reservation_number->value(),
+    ));
+    drupal_set_message($message);
+
+    watchdog('restaurant_reservation', 'Successfully updated the status for reservation @number from @current to @new.', array(
+      '@number' => $wrapper->field_reservation_number->value(),
+      '@current' => $current_status,
+      '@new' => $status,
+    ));
+  }
+  else {
+    drupal_set_message(t('An error occurred. Please try again.', 'error'));
+    watchdog('restaurant_reservation', 'Unable to update the status for reservation @number from @current to @new.', array(
+      '@number' => $wrapper->field_reservation_number->value(),
+      '@current' => $current_status,
+      '@new' => $status,
+    ), WATCHDOG_ERROR);
+  }
+}
+
+/**
+ * Implements hook_entity_insert().
+ */
+function restaurant_reservation_entity_insert($entity) {
+  if ($entity->type == 'reservation') {
+    restaurant_reservation_send_update_status_mail($entity);
+  }
+}
+
+/**
+ * Implements hook_entity_update().
+ */
+function restaurant_reservation_entity_update($entity, $type) {
+  if ($entity->type == 'reservation') {
+    $wrapper = entity_metadata_wrapper('reservation', $entity);
+    $original_wrapper = entity_metadata_wrapper('reservation', $entity->original);
+
+    // If the status has changed, send an email.
+    if ($wrapper->field_reservation_status->value() !== $original_wrapper->field_reservation_status->value()) {
+      if (restaurant_reservation_send_update_status_mail($entity)) {
+        drupal_set_message(t('An email has been sent to %email.', array(
+          '%email' => $wrapper->field_reservation_email->value(),
+        )));
+      }
+    }
   }
 }
 
@@ -173,27 +249,42 @@ function restaurant_reservation_node_insert($node) {
  * Sends an email for a reservation status change.
  */
 function restaurant_reservation_send_update_status_mail($reservation) {
-  $current_status = entity_metadata_wrapper('node', $reservation)->field_reservation_status->value();
+  $wrapper = entity_metadata_wrapper('reservation', $reservation);
+  $current_status = $wrapper->field_reservation_status->value();
+
+  // Get the email for this status.
   $mail = _restaurant_reservation_get_mail_for_status($current_status);
 
-  $params['subject'] = $mail['subject'];
-  $params['body'] = $mail['body'];
+  if (!empty($mail)) {
+    $params['subject'] = $mail['subject'];
+    $params['body'] = $mail['body'];
 
-  // Append the reservation number to the subject.
-  // TODO: Tokenize this.
-  $reservation_number = entity_metadata_wrapper('node', $reservation)->field_reservation_number->value();
-  $params['subject'] = '[Reservation ' . $reservation_number . '] ' . $params['subject'];
+    // Append the reservation number to the subject.
+    // TODO: Tokenize this.
+    $reservation_number = $wrapper->field_reservation_number->value();
+    $params['subject'] = '[Reservation ' . $reservation_number . '] ' . $params['subject'];
 
-  // For now, let's just attach the node display to the body.
-  // TODO: Tokenize this. Add HTML support.
-  $params['body'] .= drupal_render(node_view($reservation));
+    // For now, let's just attach the node display to the body.
+    // TODO: Tokenize this. Add HTML support.
+    $params['body'] .= drupal_render(entity_view('reservation', array($reservation), 'email'));
 
-  $to = entity_metadata_wrapper('node', $reservation)->field_reservation_email->value();
-  $lang = language_default();
+    $to = $wrapper->field_reservation_email->value();
+    $lang = language_default();
 
-  return drupal_mail('restaurant_mail', 'restaurant_mail', $to, $lang, $params);
+    return drupal_mail('restaurant_mail', 'restaurant_mail', $to, $lang, $params);
+  }
+
+  return FALSE;
 }
 
+/**
+ * Returns the email for a status.
+ *
+ * @param string $status
+ *  The status of the reservation.
+ * @return array
+ *  A mail array with subject and body.
+ */
 function _restaurant_reservation_get_mail_for_status($status = '') {
   $mail = array();
 
@@ -205,56 +296,6 @@ function _restaurant_reservation_get_mail_for_status($status = '') {
   }
 
   return isset($mail[$status]) ? $mail[$status] : $mail;
-}
-
-/**
- * Implements hook_panopoly_config_info().
- */
-function restaurant_reservation_panopoly_config_info() {
-  $config = array();
-  
-  $config['reservation_show_notifications'] = array(
-    'title' => t('Show notifications'),
-    'description' => t('If enable, the module will show a notification for new reservations.'),
-    'type' => 'boolean',
-    'default' => TRUE,
-  );
-
-  $config['reservation_number_prefix'] = array(
-    'title' => t('Reservation number prefix'),
-    'description' => t('Prefix to use for reservation numbers. Example RN, RESERVATION.'),
-    'type' => 'string',
-    'require' => TRUE,
-    'default' => 'RN',
-  );
-
-  $config['reservation_form_success_message'] = array(
-    'title' => t('Reservation form success message'),
-    'description' => t('Success message to display on the reservation form.'),
-    'type' => 'string',
-    'require' => TRUE,
-  );
-
-  $statuses = restaurant_reservation_get_statuses();
-  foreach ($statuses as $name => $status) {
-    $config['reservation_mail_' . $name . '_[mail_part]'] = array(
-      'title' => t('Email for @name reservations', array('@name' => $name)),
-      'description' => t('Message for reservation @name email. The reservation number and the reservation details will be added to the message.', array('@name' => $name)),
-      'type' => 'mail_text',
-      'require' => TRUE,
-    );
-  }
-
-  $info = array(
-    'reservation' => array(
-      'title' => t('Reservation system'),
-      'description' => t('Configuration for the Reservation system'),
-      'weight' => 50,
-      'config' => $config,
-    ),
-  );
-
-  return $info;
 }
 
 /**
@@ -270,9 +311,17 @@ function restaurant_reservation_preprocess_views_view_table(&$variables) {
       $row['field_reservation_status'] = theme('restaurant_reservation_status', array('status' => $status));
     }
   }
+}
 
-  // Add css.
-  drupal_add_css(drupal_get_path('module', 'restaurant_reservation') . '/css/restaurant_reservation.css');
+/**
+ * Implements hook_preprocess_views_view_fields().
+ */
+function restaurant_reservation_preprocess_views_view_fields(&$variables, $hook) {
+  $fields = $variables['fields'];
+  if (isset($fields['field_reservation_status'])) {
+    $status = $variables['fields']['field_reservation_status']->content;
+    $variables['fields']['field_reservation_status']->content = theme('restaurant_reservation_status', array('status' => $status));
+  }
 }
 
 /**
@@ -284,14 +333,9 @@ function computed_field_field_reservation_number_compute(&$entity_field, $entity
     return $entity_field[0]['value'];
   }
 
-  // Generate a unique id.
-  $reservation_nid = $entity->nid;
-  $reservation_number = _restaurant_reservation_get_unique_id($reservation_nid);
-
-  // Make sure reservation number is unique.
-  while (_restaurant_reservation_number_exists($reservation_number)) {
-    $reservation_number = _restaurant_reservation_get_unique_id($reservation_nid);
-  }
+  // Generate a unique id using the id.
+  $reservation_id = entity_id($entity_type, $entity);
+  $reservation_number = _restaurant_reservation_generate_reservation_number_from_id($reservation_id);
 
   $entity_field[0]['value'] = $reservation_number;
 }
@@ -308,6 +352,8 @@ function computed_field_field_reservation_number_display($field, $entity_field_i
  *
  * @param $reverse
  *  If TRUE, array_flip is applied to the return array.
+ * @return array
+ *  An array of statuses.
  */
 function restaurant_reservation_get_statuses($reverse = FALSE) {
   // Get values from field.
@@ -319,22 +365,6 @@ function restaurant_reservation_get_statuses($reverse = FALSE) {
   }
 
   return $statuses;
-}
-
-/**
- * Colors for statuses.
- *
- * @param $status
- *  The status of the reservations to find. pending, confirmed or cancelled.
- */
-function _restaurant_reservation_get_status_color($status) {
-  $colors = array(
-    'pending' => 'info',
-    'confirmed' => 'success',
-    'cancelled' => 'danger',
-  );
-
-  return isset($colors[$status]) ? $colors[$status] : 'info';
 }
 
 /**
@@ -368,38 +398,42 @@ function restaurant_reservation_get_reservations_for_status($status, $load = FAL
 /**
  * Changes the status for a reservation.
  *
- * @param $reservation_id
+ * @param $reservation
  *  The id of the reservation.
  * @param $status
  *  The new status of the reservations.
  * @return
  *  TRUE if status has been successfully changed.
  */
-function restaurant_reservation_update_status_for_reservation($reservation_id, $status) {
-  $node = node_load($reservation_id);
+function restaurant_reservation_update_status_for_reservation($reservation, $status) {
+  $wrapper = entity_metadata_wrapper('reservation', $reservation);
 
-  // Update the status for the node.
-  $node->field_reservation_status[LANGUAGE_NONE][0]['value'] = $status;
-
-  // Save the node.
-  node_save($node);
-
-  return ($node->field_reservation_status[LANGUAGE_NONE][0]['value'] == $status);
+  // Update the status and save it.
+  $wrapper->field_reservation_status->set($status);
+  return $wrapper->save();
 }
 
 /**
- * Generates a random unique id for a reservation number.
+ * Generates a unique reservation number from reservation id.
  *
- * @param $nid
- *  The node id of the reservation node.
+ * @param $reservation_id
+ *  The id of the reservation entity.
  *
  * @return String
- *  A unique id.
+ *  The reservation number.
  */
-function _restaurant_reservation_get_unique_id($nid) {
+function _restaurant_reservation_generate_reservation_number_from_id($reservation_id) {
   $salt = drupal_get_hash_salt();
-  $hash = md5($salt . $nid . time());
-  return panopoly_config_get('reservation_number_prefix') . substr($hash, rand(0, strlen($hash) - 5), 5);
+  $hash = md5($salt . $reservation_id);
+  $prefix = panopoly_config_get('reservation_number_prefix');
+  $reservation_number = $prefix . substr($hash, rand(0, strlen($hash) - 5), 5);
+
+  // Make sure reservation number is unique.
+  while (_restaurant_reservation_reservation_number_exists($reservation_number)) {
+    $reservation_number = _restaurant_reservation_generate_reservation_number_from_id($reservation_id);
+  }
+
+  return $reservation_number;
 }
 
 /**
@@ -411,7 +445,7 @@ function _restaurant_reservation_get_unique_id($nid) {
  * @return BOOLEAN
  *  TRUE if the number exists.
  */
-function _restaurant_reservation_number_exists($reservation_number) {
+function _restaurant_reservation_reservation_number_exists($reservation_number) {
   $reservation_number = db_select('field_data_field_reservation_number', 'rn')
     ->fields('rn', array('field_reservation_number_value'))
     ->condition('field_reservation_number_value', $reservation_number)
@@ -419,13 +453,4 @@ function _restaurant_reservation_number_exists($reservation_number) {
     ->fetchField();
 
   return (!empty($reservation_number)) ? TRUE : FALSE;
-}
-
-/**
- * Returns path for showing reservation notifications.
- */
-function _restaurant_reservation_get_notification_paths() {
-  return array(
-    'admin/*'
-  );
 }
