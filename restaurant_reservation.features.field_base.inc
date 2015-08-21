@@ -17,7 +17,6 @@ function restaurant_reservation_field_default_field_bases() {
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_reservation_date',
-    'foreign keys' => array(),
     'indexes' => array(),
     'locked' => 0,
     'module' => 'date',
@@ -47,7 +46,6 @@ function restaurant_reservation_field_default_field_bases() {
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_reservation_email',
-    'foreign keys' => array(),
     'indexes' => array(),
     'locked' => 0,
     'module' => 'email',
@@ -63,14 +61,6 @@ function restaurant_reservation_field_default_field_bases() {
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_reservation_message',
-    'foreign keys' => array(
-      'format' => array(
-        'columns' => array(
-          'format' => 'format',
-        ),
-        'table' => 'filter_format',
-      ),
-    ),
     'indexes' => array(
       'format' => array(
         0 => 'format',
@@ -90,14 +80,6 @@ function restaurant_reservation_field_default_field_bases() {
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_reservation_name',
-    'foreign keys' => array(
-      'format' => array(
-        'columns' => array(
-          'format' => 'format',
-        ),
-        'table' => 'filter_format',
-      ),
-    ),
     'indexes' => array(
       'format' => array(
         0 => 'format',
@@ -119,7 +101,6 @@ function restaurant_reservation_field_default_field_bases() {
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_reservation_number',
-    'foreign keys' => array(),
     'indexes' => array(),
     'locked' => 0,
     'module' => 'computed_field',
@@ -129,7 +110,7 @@ function restaurant_reservation_field_default_field_bases() {
         'data_default' => '',
         'data_index' => 0,
         'data_length' => 32,
-        'data_not_NULL' => 0,
+        'data_not_NULL' => 1,
         'data_precision' => 10,
         'data_scale' => 2,
         'data_size' => 'normal',
@@ -142,14 +123,13 @@ function restaurant_reservation_field_default_field_bases() {
     'type' => 'computed',
   );
 
-  // Exported field_base: 'field_reservation_persons'
-  $field_bases['field_reservation_persons'] = array(
+  // Exported field_base: 'field_reservation_party_size'
+  $field_bases['field_reservation_party_size'] = array(
     'active' => 1,
     'cardinality' => 1,
     'deleted' => 0,
     'entity_types' => array(),
-    'field_name' => 'field_reservation_persons',
-    'foreign keys' => array(),
+    'field_name' => 'field_reservation_party_size',
     'indexes' => array(),
     'locked' => 0,
     'module' => 'number',
@@ -165,14 +145,6 @@ function restaurant_reservation_field_default_field_bases() {
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_reservation_phone',
-    'foreign keys' => array(
-      'format' => array(
-        'columns' => array(
-          'format' => 'format',
-        ),
-        'table' => 'filter_format',
-      ),
-    ),
     'indexes' => array(
       'format' => array(
         0 => 'format',
@@ -194,7 +166,6 @@ function restaurant_reservation_field_default_field_bases() {
     'deleted' => 0,
     'entity_types' => array(),
     'field_name' => 'field_reservation_status',
-    'foreign keys' => array(),
     'indexes' => array(
       'value' => array(
         0 => 'value',

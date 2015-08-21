@@ -8,11 +8,13 @@
  * Implements theme_restaurant_reservation_status().
  */
 function theme_restaurant_reservation_status($variables) {
-  $status = $variables['status'];
-  $statuses = restaurant_reservation_get_statuses(TRUE);
-  $color = _restaurant_reservation_get_status_color($statuses[$status]);
+  $status_value = trim($variables['status']);
+  if (!empty($status_value)) {
+    $statuses = restaurant_reservation_get_statuses();
+    $status_key = array_search($status_value, $statuses);
 
-  return '<span class="label label-' . $color . '">' . $status . '</span>';
+    return '<span class="reservation-label reservation-label-' . $status_key . '">' . $status_value . '</span>';
+  }
 }
 
 /**
