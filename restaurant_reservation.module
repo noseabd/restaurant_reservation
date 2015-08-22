@@ -230,7 +230,7 @@ function restaurant_reservation_entity_insert($entity) {
  * Implements hook_entity_update().
  */
 function restaurant_reservation_entity_update($entity, $type) {
-  if ($entity->type == 'reservation') {
+  if ($type == 'reservation') {
     $wrapper = entity_metadata_wrapper('reservation', $entity);
     $original_wrapper = entity_metadata_wrapper('reservation', $entity->original);
 
