@@ -16,6 +16,17 @@ function restaurant_reservation_ctools_plugin_directory($module, $plugin) {
 }
 
 /**
+ * Implements hook_entity_info_alter().
+ */
+function restaurant_reservation_entity_info_alter(&$entity_info) {
+  // View modes for reservation.
+  $entity_info['reservation']['view modes']['email'] = array(
+    'label' => t('Email'),
+    'custom settings' => TRUE,
+  );
+}
+
+/**
  * Implements hook_menu().
  */
 function restaurant_reservation_menu() {
