@@ -23,8 +23,8 @@ function restaurant_reservation_field_group_info() {
     'label' => 'Contact',
     'weight' => '0',
     'children' => array(
-      0 => 'field_reservation_name',
-      1 => 'field_reservation_email',
+      0 => 'field_reservation_email',
+      1 => 'field_reservation_name',
       2 => 'field_reservation_phone',
     ),
     'format_type' => 'fieldset',
@@ -52,9 +52,10 @@ function restaurant_reservation_field_group_info() {
     'weight' => '1',
     'children' => array(
       0 => 'field_reservation_date',
-      1 => 'field_reservation_party_size',
-      2 => 'field_reservation_number',
+      1 => 'field_reservation_number',
+      2 => 'field_reservation_party_size',
       3 => 'field_reservation_status',
+      4 => 'field_reservation_location',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(

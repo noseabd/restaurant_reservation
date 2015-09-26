@@ -71,77 +71,14 @@ function restaurant_reservation_default_page_manager_pages() {
   $display->content = array();
   $display->panels = array();
   $pane = new stdClass();
-  $pane->pid = 'new-2f44501b-11fd-467a-af95-a972c95a9153';
+  $pane->pid = 'new-e353775c-352b-4bee-855d-ebffd75a98f9';
   $pane->panel = 'region_a';
   $pane->type = 'fieldable_panels_pane';
-  $pane->subtype = 'fpid:19';
+  $pane->subtype = 'uuid:c2ca27db-55dc-4f7a-ac0f-e212a10d4f94';
   $pane->shown = TRUE;
   $pane->access = array();
   $pane->configuration = array(
     'view_mode' => 'full',
-    'fieldable_panels_pane' => (object) array(
-      'timestamp' => 1440241731,
-      'uid' => '1',
-      'title' => '',
-      'log' => '',
-      'vuuid' => '',
-      'fpid' => '19',
-      'bundle' => 'slideshow',
-      'link' => 0,
-      'path' => '',
-      'reusable' => 1,
-      'admin_title' => 'Book a Table',
-      'admin_description' => '',
-      'category' => 'Reusable Content',
-      'view_access' => NULL,
-      'edit_access' => NULL,
-      'created' => '1440181175',
-      'changed' => 1440241731,
-      'uuid' => '',
-      'language' => 'und',
-      'current_vid' => '42',
-      'field_slideshow_slides' => array(
-        'und' => array(
-          0 => array(
-            'value' => '19',
-          ),
-        ),
-      ),
-      'revision' => 1,
-      'is_new' => FALSE,
-      'original' => (object) array(
-        'vid' => '42',
-        'timestamp' => '1440181175',
-        'uid' => '1',
-        'title' => '',
-        'log' => '',
-        'vuuid' => '',
-        'fpid' => '19',
-        'bundle' => 'slideshow',
-        'link' => '0',
-        'path' => '',
-        'reusable' => '1',
-        'admin_title' => 'Book a Table',
-        'admin_description' => '',
-        'category' => 'Reusable Content',
-        'view_access' => NULL,
-        'edit_access' => NULL,
-        'created' => '1440181175',
-        'changed' => '1440181175',
-        'uuid' => '',
-        'language' => 'und',
-        'current_vid' => '42',
-        'field_slideshow_slides' => array(
-          'und' => array(
-            0 => array(
-              'value' => '19',
-            ),
-          ),
-        ),
-      ),
-      'old_vid' => '42',
-      'vid' => '56',
-    ),
   );
   $pane->cache = array();
   $pane->style = array();
@@ -149,84 +86,18 @@ function restaurant_reservation_default_page_manager_pages() {
   $pane->extras = array();
   $pane->position = 0;
   $pane->locks = array();
-  $pane->uuid = '2f44501b-11fd-467a-af95-a972c95a9153';
-  $display->content['new-2f44501b-11fd-467a-af95-a972c95a9153'] = $pane;
-  $display->panels['region_a'][0] = 'new-2f44501b-11fd-467a-af95-a972c95a9153';
+  $pane->uuid = 'e353775c-352b-4bee-855d-ebffd75a98f9';
+  $display->content['new-e353775c-352b-4bee-855d-ebffd75a98f9'] = $pane;
+  $display->panels['region_a'][0] = 'new-e353775c-352b-4bee-855d-ebffd75a98f9';
   $pane = new stdClass();
-  $pane->pid = 'new-2ad0a668-7fed-4889-800c-961b103011e2';
+  $pane->pid = 'new-9f6ea99d-f6b4-4dd6-978d-9b5c5fb98146';
   $pane->panel = 'region_c';
   $pane->type = 'fieldable_panels_pane';
-  $pane->subtype = 'fpid:20';
+  $pane->subtype = 'uuid:44311ff4-0eb1-45c7-ad9b-e0cbcd8d4d2e';
   $pane->shown = TRUE;
   $pane->access = array();
   $pane->configuration = array(
     'view_mode' => 'full',
-    'fieldable_panels_pane' => (object) array(
-      'timestamp' => 1440241704,
-      'uid' => '1',
-      'title' => 'How to book a table',
-      'log' => '',
-      'vuuid' => '',
-      'fpid' => '20',
-      'bundle' => 'text',
-      'link' => 0,
-      'path' => '',
-      'reusable' => 1,
-      'admin_title' => 'How to book a table',
-      'admin_description' => '',
-      'category' => 'Reusable Content',
-      'view_access' => NULL,
-      'edit_access' => NULL,
-      'created' => '1440181246',
-      'changed' => 1440241704,
-      'uuid' => '',
-      'language' => 'und',
-      'current_vid' => '43',
-      'field_basic_text_text' => array(
-        'und' => array(
-          0 => array(
-            'value' => '<h4>Step 1</h4><p>Fill in the reservation form with your contact information, the date of your reservation and the number of persons.</p><h4>Step 2</h4><p>Wait for our email that confirms that your reservation has been received.</p><h4>Step 3</h4><p>We will email you or call you back when your reservation has been confirmed.</p><p>[config:opening_hours]</p>',
-            'format' => 'panopoly_wysiwyg_text',
-          ),
-        ),
-      ),
-      'revision' => 1,
-      'is_new' => FALSE,
-      'original' => (object) array(
-        'vid' => '43',
-        'timestamp' => '1440181246',
-        'uid' => '1',
-        'title' => 'How to book a table',
-        'log' => '',
-        'vuuid' => '',
-        'fpid' => '20',
-        'bundle' => 'text',
-        'link' => '0',
-        'path' => '',
-        'reusable' => '1',
-        'admin_title' => 'How to book a table',
-        'admin_description' => '',
-        'category' => 'Reusable Content',
-        'view_access' => NULL,
-        'edit_access' => NULL,
-        'created' => '1440181246',
-        'changed' => '1440181246',
-        'uuid' => '',
-        'language' => 'und',
-        'current_vid' => '43',
-        'field_basic_text_text' => array(
-          'und' => array(
-            0 => array(
-              'value' => '<h4>Step 1</h4><p>Fill in the reservation form with your contact information, the date of your reservation and the number of persons.</p><h4>Step 2</h4><p>Wait for our email that confirms that your reservation has been received.</p><h4>Step 3</h4><p>We will email you or call you back when your reservation has been confirmed.</p>',
-              'format' => 'panopoly_wysiwyg_text',
-              'safe_value' => '<h4>Step 1</h4><p>Fill in the reservation form with your contact information, the date of your reservation and the number of persons.</p><h4>Step 2</h4><p>Wait for our email that confirms that your reservation has been received.</p><h4>Step 3</h4><p>We will email you or call you back when your reservation has been confirmed.</p>',
-            ),
-          ),
-        ),
-      ),
-      'old_vid' => '43',
-      'vid' => '55',
-    ),
   );
   $pane->cache = array();
   $pane->style = array();
@@ -234,9 +105,9 @@ function restaurant_reservation_default_page_manager_pages() {
   $pane->extras = array();
   $pane->position = 0;
   $pane->locks = array();
-  $pane->uuid = '2ad0a668-7fed-4889-800c-961b103011e2';
-  $display->content['new-2ad0a668-7fed-4889-800c-961b103011e2'] = $pane;
-  $display->panels['region_c'][0] = 'new-2ad0a668-7fed-4889-800c-961b103011e2';
+  $pane->uuid = '9f6ea99d-f6b4-4dd6-978d-9b5c5fb98146';
+  $display->content['new-9f6ea99d-f6b4-4dd6-978d-9b5c5fb98146'] = $pane;
+  $display->panels['region_c'][0] = 'new-9f6ea99d-f6b4-4dd6-978d-9b5c5fb98146';
   $pane = new stdClass();
   $pane->pid = 'new-97228bdc-7cb2-4e12-99fe-983ffa767ac3';
   $pane->panel = 'region_d';

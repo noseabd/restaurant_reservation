@@ -128,6 +128,18 @@ function restaurant_reservation_views_default_views() {
   $handler->display->display_options['fields']['field_reservation_name']['element_wrapper_type'] = '0';
   $handler->display->display_options['fields']['field_reservation_name']['element_default_classes'] = FALSE;
   $handler->display->display_options['fields']['field_reservation_name']['field_api_classes'] = TRUE;
+  /* Field: Reservation: Location */
+  $handler->display->display_options['fields']['field_reservation_location']['id'] = 'field_reservation_location';
+  $handler->display->display_options['fields']['field_reservation_location']['table'] = 'field_data_field_reservation_location';
+  $handler->display->display_options['fields']['field_reservation_location']['field'] = 'field_reservation_location';
+  $handler->display->display_options['fields']['field_reservation_location']['label'] = 'Restaurant';
+  $handler->display->display_options['fields']['field_reservation_location']['element_type'] = '0';
+  $handler->display->display_options['fields']['field_reservation_location']['element_wrapper_type'] = '0';
+  $handler->display->display_options['fields']['field_reservation_location']['element_default_classes'] = FALSE;
+  $handler->display->display_options['fields']['field_reservation_location']['settings'] = array(
+    'link' => 0,
+  );
+  $handler->display->display_options['fields']['field_reservation_location']['field_api_classes'] = TRUE;
   /* Field: Reservation: Date */
   $handler->display->display_options['fields']['field_reservation_date']['id'] = 'field_reservation_date';
   $handler->display->display_options['fields']['field_reservation_date']['table'] = 'field_data_field_reservation_date';
@@ -352,6 +364,7 @@ function restaurant_reservation_views_default_views() {
   $handler->display->display_options['arguments']['date_argument']['field'] = 'date_argument';
   $handler->display->display_options['arguments']['date_argument']['default_action'] = 'default';
   $handler->display->display_options['arguments']['date_argument']['default_argument_type'] = 'date';
+  $handler->display->display_options['arguments']['date_argument']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['date_argument']['granularity_reset'] = 0;
   $handler->display->display_options['arguments']['date_argument']['date_fields'] = array(
     'field_data_field_reservation_date.field_reservation_date_value' => 'field_data_field_reservation_date.field_reservation_date_value',
