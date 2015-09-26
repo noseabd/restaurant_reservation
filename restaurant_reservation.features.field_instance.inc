@@ -30,7 +30,7 @@ function restaurant_reservation_field_default_field_instances() {
           'show_remaining_days' => FALSE,
         ),
         'type' => 'date_default',
-        'weight' => 3,
+        'weight' => 4,
       ),
       'email' => array(
         'label' => 'above',
@@ -80,7 +80,7 @@ function restaurant_reservation_field_default_field_instances() {
         'year_range' => '-0:+1',
       ),
       'type' => 'date_popup',
-      'weight' => 3,
+      'weight' => 4,
     ),
   );
 
@@ -132,6 +132,53 @@ function restaurant_reservation_field_default_field_instances() {
       ),
       'type' => 'email_textfield',
       'weight' => 6,
+    ),
+  );
+
+  // Exported field_instance:
+  // 'reservation-reservation-field_reservation_location'
+  $field_instances['reservation-reservation-field_reservation_location'] = array(
+    'bundle' => 'reservation',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Select a restaurant location.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'entityreference',
+        'settings' => array(
+          'link' => FALSE,
+        ),
+        'type' => 'entityreference_label',
+        'weight' => 2,
+      ),
+      'email' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'reservation',
+    'fences_wrapper' => 'no_wrapper',
+    'field_name' => 'field_reservation_location',
+    'label' => 'Location',
+    'required' => 1,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 2,
     ),
   );
 
@@ -246,7 +293,7 @@ function restaurant_reservation_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 2,
+      'weight' => 3,
     ),
   );
 
@@ -322,7 +369,7 @@ function restaurant_reservation_field_default_field_instances() {
           'thousand_separator' => ' ',
         ),
         'type' => 'number_integer',
-        'weight' => 4,
+        'weight' => 5,
       ),
       'email' => array(
         'label' => 'above',
@@ -441,7 +488,7 @@ function restaurant_reservation_field_default_field_instances() {
         'module' => 'list',
         'settings' => array(),
         'type' => 'list_default',
-        'weight' => 2,
+        'weight' => 3,
       ),
       'email' => array(
         'label' => 'above',
@@ -480,12 +527,14 @@ function restaurant_reservation_field_default_field_instances() {
   // Included for use with string extractors like potx.
   t('Date');
   t('Email');
+  t('Location');
   t('Message');
   t('Name');
   t('Number of persons.');
   t('Party size');
   t('Phone');
   t('Reservation number');
+  t('Select a restaurant location.');
   t('Status');
 
   return $field_instances;

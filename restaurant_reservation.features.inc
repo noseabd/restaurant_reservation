@@ -36,6 +36,7 @@ function restaurant_reservation_eck_bundle_info() {
       'entity_type' => 'reservation',
       'name' => 'reservation',
       'label' => 'Reservation',
+      'config' => array(),
     ),
   );
   return $items;
