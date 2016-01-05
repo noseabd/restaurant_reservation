@@ -277,7 +277,8 @@ function restaurant_reservation_send_update_status_mail($reservation) {
 
     // For now, let's just attach the node display to the body.
     // TODO: Tokenize this. Add HTML support.
-    $params['body'] .= drupal_render(entity_view('reservation', array($reservation), 'email'));
+    $body = entity_view('reservation', array($reservation), 'email');
+    $params['body'] .= drupal_render($body);
 
     $to = $wrapper->field_reservation_email->value();
     $lang = language_default();
