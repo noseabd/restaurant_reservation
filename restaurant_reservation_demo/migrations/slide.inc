@@ -7,8 +7,8 @@
 // Migration class
 class RestaurantReservationDemoMigrateSlideMigration extends Migration {
 
-  public function __construct() {
-    parent::__construct();
+  public function __construct($arguments) {
+    parent::__construct($arguments);
     $this->modulePath = drupal_get_path('module', 'restaurant_reservation_demo');
     $this->data = $this->modulePath . '/data/slides.csv';
     $this->description = t('Import slides for Slideshows.');
