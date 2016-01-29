@@ -478,14 +478,14 @@ function restaurant_reservation_migrate_api() {
         'title' => t('Restaurant reservation demo content'),
       ),
     ),
-    'migrations' => restaurant_reservation_get_migrations(),
+    'migrations' => restaurant_reservation_demo_get_migrations(),
   );
 }
 
 /**
  * Returns an array of migrations.
  */
-function restaurant_reservation_get_migrations() {
+function restaurant_reservation_demo_get_migrations() {
   return array(
     'RestaurantReservationDemoMigrateSlideshowMigration' => array(
       'class_name' => 'RestaurantReservationDemoMigrateSlideshowMigration',
